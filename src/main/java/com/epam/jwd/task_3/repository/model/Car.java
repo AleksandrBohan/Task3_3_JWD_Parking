@@ -6,9 +6,9 @@ public class Car {
 
     private String nameOfCar;
 
-    private int personalNumberOfCar;
+    private Long personalNumberOfCar;
 
-    public Car(String nameOfCar, int personalNumberOfCar){
+    public Car(String nameOfCar, Long personalNumberOfCar){
         setNameOfCar(nameOfCar);
         setPersonalNumberOfCar(personalNumberOfCar);
 
@@ -22,11 +22,11 @@ public class Car {
         this.nameOfCar = nameOfCar;
     }
 
-    public int getPersonalNumberOfCar() {
+    public Long getPersonalNumberOfCar() {
         return personalNumberOfCar;
     }
 
-    public void setPersonalNumberOfCar(int personalNumberOfCar) {
+    public void setPersonalNumberOfCar(Long personalNumberOfCar) {
         this.personalNumberOfCar = personalNumberOfCar;
     }
 
