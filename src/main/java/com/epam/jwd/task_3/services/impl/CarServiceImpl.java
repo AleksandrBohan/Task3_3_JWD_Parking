@@ -16,6 +16,11 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
+    public void addCarsToParking(List<Car> cars, Parking[][] parking) {
+
+    }
+
+    @Override
     public void setTimeForCarOnParkingPlace(Parking[][] parking, int milis) {
         for (int i = 0; i < parking.length; i++){
             try {

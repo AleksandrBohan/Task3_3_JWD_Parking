@@ -8,8 +8,14 @@ import com.epam.jwd.task_3.services.api.ParkingService;
 import java.util.Map;
 
 public class ParkingServiceImpl implements ParkingService {
+
     @Override
-    public Parking swapNearbyCars(Map<ParkingPlace, Car> placeCar) {
+    public void setParkingSize(int size) {
+
+    }
+
+    @Override
+    public Parking swapNearbyCars(Map<ParkingPlace, Car> placeCar, Parking[][] parking) {
         return null;
     }
 }
