@@ -2,7 +2,7 @@ package com.epam.jwd.task_3.repository.model;
 
 import java.util.Objects;
 
-public class Car {
+public class Car extends ParkingPlace{
 
     private String nameOfCar;
 

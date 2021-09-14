@@ -10,6 +10,9 @@ public class ParkingPlace {
 
     }
 
+    public ParkingPlace() {
+    }
+
     public int getIndexOfPlace() {
         return indexOfPlace;
     }
