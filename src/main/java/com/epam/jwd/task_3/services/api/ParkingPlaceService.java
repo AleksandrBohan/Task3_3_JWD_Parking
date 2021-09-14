@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface ParkingPlaceService {
 
-   ParkingPlace setCar(Car car, int parkingPlacesCount);
+   void setCar(Car car, int parkingPlacesCount, Object[] parking);
 
 }
