@@ -1,35 +1,38 @@
 package com.epam.jwd.task_3.services.impl;
 
 import com.epam.jwd.task_3.repository.model.Car;
-import com.epam.jwd.task_3.repository.model.ParkingPlace;
+import com.epam.jwd.task_3.repository.model.Parking;
 import com.epam.jwd.task_3.services.api.CarService;
 
 import java.util.List;
 
 public class CarServiceImpl implements CarService {
+
+    private static final Integer POSITION_OF_CAR = 1;
+
     @Override
     public void createListOfCars(List<Car> list, Car car) {
         list.add(car);
     }
 
     @Override
-    public void setTimeForCarOnParkingPlace(ParkingPlace[] parkingPlaces, int milis) {
-        for (int i = 0; i < parkingPlaces.length; i++){
+    public void setTimeForCarOnParkingPlace(Parking[][] parking, int milis) {
+        for (int i = 0; i < parking.length; i++){
             try {
-                parkingPlaces[i].wait(milis);
+                parking[i][POSITION_OF_CAR].wait(milis);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+               //TODO logger.error
             }
         }
     }
 
     @Override
-    public void setWaitingForCarOutOfParking(List list, ParkingPlace[] parkingPlaces, int milis) {
-        for (int i = parkingPlaces.length + 1; i < list.size(); i++){
+    public void setWaitingForCarOutOfParking(List<Car> cars, Parking[][] parking, int milis) {
+        for (int i = parking.length + 1; i < cars.size(); i++){
             try {
-                list.get(i).wait(milis);
+                cars.get(i).wait(milis);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                //TODO logger.error
             }
         }
     }

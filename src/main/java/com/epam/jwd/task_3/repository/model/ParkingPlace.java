@@ -2,16 +2,14 @@ package com.epam.jwd.task_3.repository.model;
 
 import java.util.Objects;
 
-public class ParkingPlace {
+public class ParkingPlace extends Parking {
 
     private int indexOfPlace;
 
     public ParkingPlace(int indexOfPlace){
-
+       setIndexOfPlace(indexOfPlace);
     }
 
-    public ParkingPlace() {
-    }
 
     public int getIndexOfPlace() {
         return indexOfPlace;

@@ -1,31 +1,34 @@
 package com.epam.jwd.task_3.repository.model;
 
-import java.util.Arrays;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public class Parking {
 
-    private Car [] car;
+    private List<Car> cars = new ArrayList<>();
 
-    private ParkingPlace [] countOfPlaces;
+    private List<ParkingPlace> parkingPlaces = new ArrayList<>();
 
-    public Parking(Car [] car, ParkingPlace [] countOfPlaces){
+    public Parking(List<Car> cars, List<ParkingPlace> parkingPlaces){
 
     }
 
-    public Car[] getCar() {
-        return car;
+    public List<Car> getCars() {
+        return cars;
     }
 
-    public void setCar(Car[] car) {
-        this.car = car;
+    public void setCars(List<Car> cars) {
+        this.cars = cars;
     }
 
-    public ParkingPlace[] getCountOfPlaces() {
-        return countOfPlaces;
+    public List<ParkingPlace> getParkingPlaces() {
+        return parkingPlaces;
     }
 
-    public void setCountOfPlaces(ParkingPlace[] countOfPlaces) {
-        this.countOfPlaces = countOfPlaces;
+    public void setParkingPlaces(List<ParkingPlace> parkingPlaces) {
+        this.parkingPlaces = parkingPlaces;
     }
 
     @Override
@@ -33,22 +36,20 @@ public class Parking {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Parking parking = (Parking) o;
-        return Arrays.equals(car, parking.car) &&
-                Arrays.equals(countOfPlaces, parking.countOfPlaces);
+        return Objects.equals(cars, parking.cars) &&
+                Objects.equals(parkingPlaces, parking.parkingPlaces);
     }
 
     @Override
     public int hashCode() {
-        int result = Arrays.hashCode(car);
-        result = 31 * result + Arrays.hashCode(countOfPlaces);
-        return result;
+        return Objects.hash(cars, parkingPlaces);
     }
 
     @Override
     public String toString() {
         return "Parking{" +
-                "car=" + Arrays.toString(car) +
-                ", countOfPlaces=" + Arrays.toString(countOfPlaces) +
+                "cars=" + cars +
+                ", parkingPlaces=" + parkingPlaces +
                 '}';
     }
 }
