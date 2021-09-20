@@ -2,15 +2,18 @@ package com.epam.jwd.task_3.repository.model;
 
 import java.util.Objects;
 
-public class Car extends Parking{
+public class Car {
 
     private String nameOfCar;
 
     private Long personalNumberOfCar;
 
-    public Car(String nameOfCar, Long personalNumberOfCar){
+    private String seriesOfNumber;
+
+    public Car(String nameOfCar, Long personalNumberOfCar, String seriesOfNumber){
         setNameOfCar(nameOfCar);
         setPersonalNumberOfCar(personalNumberOfCar);
+        setSeriesOfNumber(seriesOfNumber);
 
     }
 
@@ -31,19 +34,27 @@ public class Car extends Parking{
     }
 
 
+    public String getSeriesOfNumber() {
+        return seriesOfNumber;
+    }
+
+    public void setSeriesOfNumber(String seriesOfNumber) {
+        this.seriesOfNumber = seriesOfNumber;
+    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Car car = (Car) o;
-        return personalNumberOfCar == car.personalNumberOfCar &&
-                Objects.equals(nameOfCar, car.nameOfCar);
+        return Objects.equals(nameOfCar, car.nameOfCar) &&
+                Objects.equals(personalNumberOfCar, car.personalNumberOfCar) &&
+                Objects.equals(seriesOfNumber, car.seriesOfNumber);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(nameOfCar, personalNumberOfCar);
+        return Objects.hash(nameOfCar, personalNumberOfCar, seriesOfNumber);
     }
 
     @Override
@@ -51,6 +62,7 @@ public class Car extends Parking{
         return "Car{" +
                 "nameOfCar='" + nameOfCar + '\'' +
                 ", personalNumberOfCar=" + personalNumberOfCar +
+                ", seriesOfNumber='" + seriesOfNumber + '\'' +
                 '}';
     }
 }

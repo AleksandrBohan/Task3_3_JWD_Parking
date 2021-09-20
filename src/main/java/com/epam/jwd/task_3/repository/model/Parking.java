@@ -1,33 +1,26 @@
 package com.epam.jwd.task_3.repository.model;
 
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.ArrayBlockingQueue;
+
+
+
 
 public class Parking {
 
-    private List<Car> cars = new ArrayList<>();
+    private static final int SIZE_OF_PARKING = 5;
 
-    private List<ParkingPlace> parkingPlaces = new ArrayList<>();
+    private ArrayBlockingQueue<Car> parkingPlaces = new ArrayBlockingQueue<Car>(SIZE_OF_PARKING);
 
-    public Parking(List<Car> cars, List<ParkingPlace> parkingPlaces){
-
+    public static int getSizeOfParking() {
+        return SIZE_OF_PARKING;
     }
 
-    public List<Car> getCars() {
-        return cars;
-    }
-
-    public void setCars(List<Car> cars) {
-        this.cars = cars;
-    }
-
-    public List<ParkingPlace> getParkingPlaces() {
+    public ArrayBlockingQueue<Car> getParkingPlaces() {
         return parkingPlaces;
     }
 
-    public void setParkingPlaces(List<ParkingPlace> parkingPlaces) {
+    public void setParkingPlaces(ArrayBlockingQueue<Car> parkingPlaces) {
         this.parkingPlaces = parkingPlaces;
     }
 
@@ -36,20 +29,18 @@ public class Parking {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Parking parking = (Parking) o;
-        return Objects.equals(cars, parking.cars) &&
-                Objects.equals(parkingPlaces, parking.parkingPlaces);
+        return Objects.equals(parkingPlaces, parking.parkingPlaces);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(cars, parkingPlaces);
+        return Objects.hash(parkingPlaces);
     }
 
     @Override
     public String toString() {
         return "Parking{" +
-                "cars=" + cars +
-                ", parkingPlaces=" + parkingPlaces +
+                "parkingPlaces=" + parkingPlaces +
                 '}';
     }
 }

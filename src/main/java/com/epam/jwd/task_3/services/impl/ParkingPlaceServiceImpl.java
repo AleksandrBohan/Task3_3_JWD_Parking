@@ -1,8 +1,6 @@
 package com.epam.jwd.task_3.services.impl;
 
-import com.epam.jwd.task_3.repository.model.Car;
 import com.epam.jwd.task_3.repository.model.Parking;
-import com.epam.jwd.task_3.repository.model.ParkingPlace;
 import com.epam.jwd.task_3.services.api.ParkingPlaceService;
 
 import java.util.List;
