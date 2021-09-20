@@ -2,27 +2,32 @@ package com.epam.jwd.task_3.repository.impl;
 
 import com.epam.jwd.task_3.repository.api.ParkingRepository;
 import com.epam.jwd.task_3.repository.model.Car;
+import com.epam.jwd.task_3.repository.model.Parking;
 
-import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+
+
 
 public class ParkingRepositoryImpl implements ParkingRepository {
 
-    @Override
-    public void fillEveryCarById(List<Car> cars) {
-        for (int i = 0; i < cars.size(); i++) {
-                cars.get(i).setPersonalNumberOfCar(i+1l);
-
-            }
-
-    }
+    private static final int SIZE_OF_PARKING = 3;
 
     @Override
-    public void fillEveryParkingPlaceById(List<ParkingPlace> parkingPlaces) {
-        for (int i = 0; i < parkingPlaces.size(); i++) {
-            parkingPlaces.get(i).setIndexOfPlace(i+1);
-
+    public void addCar(Car car) {
+        try {
+            new Parking().getParkingPlaces().offer(car, SIZE_OF_PARKING, TimeUnit.SECONDS);
+        } catch (InterruptedException exception) {
+            exception.printStackTrace();
         }
-
     }
 
+    @Override
+    public void deleteCar() {
+        try {
+            new Parking().getParkingPlaces().take();
+        } catch (InterruptedException exception) {
+            exception.printStackTrace();
+        }
+    }
 }

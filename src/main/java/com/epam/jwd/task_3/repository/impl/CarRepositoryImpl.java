@@ -8,8 +8,6 @@ import java.util.List;
 
 public class CarRepositoryImpl implements CarRepository {
 
-    private CarRepositoryImpl instance;
-
     private List <Car> carStorage = new ArrayList<>();
 
 
@@ -24,23 +22,17 @@ public class CarRepositoryImpl implements CarRepository {
     }
 
     @Override
-    public Car findById(Long id) {
-
+    public Car findByPersonalNumberOfCar(Long personalNumber) {
         return carStorage.stream()
-                .filter(car -> id.equals(car.getPersonalNumberOfCar()))
+                .filter(car -> personalNumber.equals(car.getPersonalNumberOfCar()))
                 .findFirst()
                 .orElse(null);
-    }
 
+    }
 
     @Override
     public boolean delete(Car car) {
         return carStorage.remove(car);
     }
 
-
-
-    public void setInstance(CarRepositoryImpl instance) {
-        this.instance = instance;
-    }
 }
