@@ -1,7 +1,5 @@
 package com.epam.jwd.task_3.repository.impl;
 
-import com.epam.jwd.task_3.repository.api.ParkingPlaceRepository;
-
 import java.util.ArrayList;
 import java.util.List;
 
