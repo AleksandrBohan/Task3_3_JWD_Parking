@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ParkingRepository {
 
-   void fillEveryCarById(List<Car> cars);
-   void fillEveryParkingPlaceById(List<ParkingPlace> parkingPlaces);
+  void addCar(Car car);
+  void deleteCar();
 
 }

@@ -7,7 +7,7 @@ import java.util.List;
 public interface CarRepository {
 
     void save(Car car);
-    Car findById(Long id);
+    Car findByPersonalNumberOfCar(Long personalNumber);
     boolean delete(Car car);
 
 }
