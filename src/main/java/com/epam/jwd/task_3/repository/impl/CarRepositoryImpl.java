@@ -4,11 +4,12 @@ import com.epam.jwd.task_3.repository.api.CarRepository;
 import com.epam.jwd.task_3.repository.model.Car;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class CarRepositoryImpl implements CarRepository {
 
-    private List <Car> carStorage = new ArrayList<>();
+    private List <Car> carStorage = Collections.synchronizedList(new ArrayList<>());
 
 
     @Override
