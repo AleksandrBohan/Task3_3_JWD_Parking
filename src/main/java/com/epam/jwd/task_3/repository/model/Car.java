@@ -2,7 +2,7 @@ package com.epam.jwd.task_3.repository.model;
 
 import java.util.Objects;
 
-public class Car {
+public class Car implements Runnable{
 
     private String nameOfCar;
 
@@ -64,5 +64,10 @@ public class Car {
                 ", personalNumberOfCar=" + personalNumberOfCar +
                 ", seriesOfNumber='" + seriesOfNumber + '\'' +
                 '}';
+    }
+
+    @Override
+    public void run() {
+        toString();
     }
 }

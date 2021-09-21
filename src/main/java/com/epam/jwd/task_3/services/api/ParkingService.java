@@ -7,6 +7,6 @@ import com.epam.jwd.task_3.repository.model.Car;
 
 public interface ParkingService {
 
-    void swapNearbyCars(Car car);
+    void swapNearbyCars(Car car, Car otherCar);
 
 }
