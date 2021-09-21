@@ -6,10 +6,13 @@ import com.epam.jwd.task_3.repository.model.Car;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.Callable;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class CarRepositoryImpl implements CarRepository {
+public class CarRepositoryImpl implements CarRepository, Runnable {
+
+    private int countOfCars;
 
     private Lock lock = new ReentrantLock();
 
@@ -32,6 +35,7 @@ public class CarRepositoryImpl implements CarRepository {
     @Override
     public void getCarsAndFillParking(List<Car> cars, int countOfCars) {
         lock.lock();
+        this.countOfCars = countOfCars;
         countOfCars *= 5;
        for (int i = 0; i < countOfCars; i++){
             new ParkingRepositoryImpl().addCar(cars.get(i));
@@ -67,5 +71,15 @@ public class CarRepositoryImpl implements CarRepository {
 
     public void setCarStorage(List<Car> carStorage) {
         this.carStorage = carStorage;
+    }
+
+    @Override
+    public void run() {
+        List <Car> carStorage = Collections.synchronizedList(new ArrayList<>());
+        lock.lock();
+        countOfCars = 5;
+        for (int i = 0; i < countOfCars; i++){
+            new ParkingRepositoryImpl().addCar(carStorage.get(i));
+        }
     }
 }
