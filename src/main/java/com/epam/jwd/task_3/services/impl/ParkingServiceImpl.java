@@ -6,12 +6,12 @@ import com.epam.jwd.task_3.services.api.CarFactory;
 import com.epam.jwd.task_3.services.api.ParkingService;
 import com.epam.jwd.task_3.services.exchanger.ConsumerForExchange;
 import com.epam.jwd.task_3.services.exchanger.ProducerForExchange;
-import com.epam.jwd.task_3.services.impl.car_factory.SedanCarFactory;
+
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.Callable;
+
 import java.util.concurrent.Exchanger;
 
 
