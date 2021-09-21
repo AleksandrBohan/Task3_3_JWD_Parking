@@ -10,26 +10,26 @@ public class SedanCarFactory implements CarFactory {
 
     @Override
     public Car getOpelCar() {
-        return new Car("Opel Insignia", PersonalNumberGenerator.generateId(), SERIES_NAME);
+        return new Car("Opel Insignia", new PersonalNumberGenerator().generateId(), SERIES_NAME);
     }
 
     @Override
     public Car getToyotaCar() {
-        return new Car("Toyota Camry", PersonalNumberGenerator.generateId(), SERIES_NAME);
+        return new Car("Toyota Camry", new PersonalNumberGenerator().generateId(), SERIES_NAME);
     }
 
     @Override
     public Car getVolkswagenCar() {
-        return new Car("Volkswagen Polo", PersonalNumberGenerator.generateId(), SERIES_NAME);
+        return new Car("Volkswagen Polo", new PersonalNumberGenerator().generateId(), SERIES_NAME);
     }
 
     @Override
     public Car getRenaultCar() {
-        return new Car("Renault Logan", PersonalNumberGenerator.generateId(), SERIES_NAME);
+        return new Car("Renault Logan", new PersonalNumberGenerator().generateId(), SERIES_NAME);
     }
 
     @Override
     public Car getMercedesCar() {
-        return new Car("Mercedes-Benz A-Class AMG", PersonalNumberGenerator.generateId(), SERIES_NAME);
+        return new Car("Mercedes-Benz A-Class AMG", new PersonalNumberGenerator().generateId(), SERIES_NAME);
     }
 }

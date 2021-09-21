@@ -1,6 +1,7 @@
 package com.epam.jwd.task_3.repository.model;
 
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class Car implements Runnable{
 
@@ -10,7 +11,7 @@ public class Car implements Runnable{
 
     private String seriesOfNumber;
 
-    public Car(String nameOfCar, Long personalNumberOfCar, String seriesOfNumber){
+    public Car(String nameOfCar, AtomicLong personalNumberOfCar, String seriesOfNumber){
         setNameOfCar(nameOfCar);
         setPersonalNumberOfCar(personalNumberOfCar);
         setSeriesOfNumber(seriesOfNumber);
