@@ -28,8 +28,8 @@ public class ParkingServiceImpl implements ParkingService {
     }
 
     @Override
-    public List<Car> fillCarListForParking(CarFactory factory) {
-      for (int i = 0; i < ParkingRepositoryImpl.getSizeOfParking(); i++){
+    public List<Car> fillCarListForParking(CarFactory factory, int countOfCars) {
+      for (int i = 0; i < countOfCars; i++){
 
           new CarRepositoryImpl().save(factory.getMercedesCar(), carStorage);
           System.out.println(carStorage.get(0));
@@ -46,13 +46,11 @@ public class ParkingServiceImpl implements ParkingService {
           new CarRepositoryImpl().save(factory.getRenaultCar(), carStorage);
           System.out.println(carStorage.get(4));
 
+
+
       }
 
-      return new CarRepositoryImpl().getCarStorage();
+      return carStorage;
     }
 
-    public static void main(String[] args) {
-        CarFactory carFactory = new SedanCarFactory();
-        new ParkingServiceImpl().fillCarListForParking(carFactory);
-    }
 }

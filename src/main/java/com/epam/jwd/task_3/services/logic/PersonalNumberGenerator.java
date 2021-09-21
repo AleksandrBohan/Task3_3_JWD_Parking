@@ -5,13 +5,13 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class PersonalNumberGenerator {
 
-    private static AtomicLong personalNumber = new AtomicLong(999L);
+    private static Long personalNumber = 999L;
 
     private ReentrantLock lock = new ReentrantLock();
 
-    public AtomicLong generateId() {
+    public Long generateId() {
         lock.lock();
-        personalNumber.getAndIncrement();
+        personalNumber++;
         lock.unlock();
         return personalNumber;
     }

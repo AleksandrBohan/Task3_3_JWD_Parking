@@ -3,15 +3,15 @@ package com.epam.jwd.task_3.repository.model;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicLong;
 
-public class Car {
+public class Car implements Runnable{
 
     private String nameOfCar;
 
-    private AtomicLong personalNumberOfCar;
+    private Long personalNumberOfCar;
 
     private String seriesOfNumber;
 
-    public Car(String nameOfCar, AtomicLong personalNumberOfCar, String seriesOfNumber){
+    public Car(String nameOfCar, Long personalNumberOfCar, String seriesOfNumber){
         setNameOfCar(nameOfCar);
         setPersonalNumberOfCar(personalNumberOfCar);
         setSeriesOfNumber(seriesOfNumber);
@@ -26,11 +26,11 @@ public class Car {
         this.nameOfCar = nameOfCar;
     }
 
-    public AtomicLong getPersonalNumberOfCar() {
+    public Long getPersonalNumberOfCar() {
         return personalNumberOfCar;
     }
 
-    public void setPersonalNumberOfCar(AtomicLong personalNumberOfCar) {
+    public void setPersonalNumberOfCar(Long personalNumberOfCar) {
         this.personalNumberOfCar = personalNumberOfCar;
     }
 
@@ -68,4 +68,9 @@ public class Car {
     }
 
 
+    @Override
+    public void run() {
+        System.out.println("Car is driving as thread!!");
+
+    }
 }
