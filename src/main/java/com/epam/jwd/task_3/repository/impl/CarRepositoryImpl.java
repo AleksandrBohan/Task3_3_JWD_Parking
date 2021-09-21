@@ -13,11 +13,12 @@ public class CarRepositoryImpl implements CarRepository {
 
     private Lock lock = new ReentrantLock();
 
-    private List <Car> carStorage = Collections.synchronizedList(new ArrayList<>());
+    private List <Car> carStorage = new ArrayList<>();
 
 
     @Override
-    public void save(Car car) {
+    public void save(Car car, List<Car> carStorage) {
+        setCarStorage(carStorage);
         try{
             lock.lock();
             carStorage.add(car);
@@ -42,4 +43,19 @@ public class CarRepositoryImpl implements CarRepository {
         return carStorage.remove(car);
     }
 
+    public Lock getLock() {
+        return lock;
+    }
+
+    public void setLock(Lock lock) {
+        this.lock = lock;
+    }
+
+    public List<Car> getCarStorage() {
+        return carStorage;
+    }
+
+    public void setCarStorage(List<Car> carStorage) {
+        this.carStorage = carStorage;
+    }
 }

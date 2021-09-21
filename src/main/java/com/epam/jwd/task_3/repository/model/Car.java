@@ -3,11 +3,11 @@ package com.epam.jwd.task_3.repository.model;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicLong;
 
-public class Car implements Runnable{
+public class Car {
 
     private String nameOfCar;
 
-    private Long personalNumberOfCar;
+    private AtomicLong personalNumberOfCar;
 
     private String seriesOfNumber;
 
@@ -26,11 +26,11 @@ public class Car implements Runnable{
         this.nameOfCar = nameOfCar;
     }
 
-    public Long getPersonalNumberOfCar() {
+    public AtomicLong getPersonalNumberOfCar() {
         return personalNumberOfCar;
     }
 
-    public void setPersonalNumberOfCar(Long personalNumberOfCar) {
+    public void setPersonalNumberOfCar(AtomicLong personalNumberOfCar) {
         this.personalNumberOfCar = personalNumberOfCar;
     }
 
@@ -67,8 +67,5 @@ public class Car implements Runnable{
                 '}';
     }
 
-    @Override
-    public void run() {
-        toString();
-    }
+
 }

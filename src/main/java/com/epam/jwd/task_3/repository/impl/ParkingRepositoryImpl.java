@@ -30,4 +30,8 @@ public class ParkingRepositoryImpl implements ParkingRepository {
             exception.printStackTrace();
         }
     }
+
+    public static int getSizeOfParking() {
+        return SIZE_OF_PARKING;
+    }
 }
