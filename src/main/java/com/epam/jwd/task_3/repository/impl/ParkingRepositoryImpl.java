@@ -2,7 +2,6 @@ package com.epam.jwd.task_3.repository.impl;
 
 import com.epam.jwd.task_3.repository.api.ParkingRepository;
 import com.epam.jwd.task_3.repository.model.Car;
-import com.epam.jwd.task_3.repository.model.Parking;
 import com.epam.jwd.task_3.services.impl.car_factory.SedanCarFactory;
 
 import java.util.concurrent.ArrayBlockingQueue;
@@ -14,12 +13,13 @@ import java.util.concurrent.TimeUnit;
 public class ParkingRepositoryImpl implements ParkingRepository, Runnable {
 
     private static final int SIZE_OF_PARKING_TIME = 3;
-    private ArrayBlockingQueue<Car> parkingPlaces = new ArrayBlockingQueue<Car>(1, true);
+    private ArrayBlockingQueue<Car> parkingPlaces;
 
     @Override
     public void addCar(Car car) {
+        parkingPlaces = new ArrayBlockingQueue<Car>(1, true);
         try {
-            boolean parkingCar = parkingPlaces.offer(car, SIZE_OF_PARKING_TIME, TimeUnit.MICROSECONDS);
+            boolean parkingCar = parkingPlaces.offer(car, SIZE_OF_PARKING_TIME, TimeUnit.SECONDS);
             System.out.println("Car is trying to park: " + car + "  " + parkingCar);
 
                 if (!parkingCar) {

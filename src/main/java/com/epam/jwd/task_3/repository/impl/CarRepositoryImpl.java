@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class CarRepositoryImpl implements CarRepository, Runnable {
+public class CarRepositoryImpl implements CarRepository {
 
     private int countOfCars;
 
@@ -35,7 +35,6 @@ public class CarRepositoryImpl implements CarRepository, Runnable {
     @Override
     public void getCarsAndFillParking(List<Car> cars, int countOfCars) {
         lock.lock();
-        this.countOfCars = countOfCars;
         countOfCars *= 5;
        for (int i = 0; i < countOfCars; i++){
             new ParkingRepositoryImpl().addCar(cars.get(i));
@@ -73,13 +72,5 @@ public class CarRepositoryImpl implements CarRepository, Runnable {
         this.carStorage = carStorage;
     }
 
-    @Override
-    public void run() {
-        List <Car> carStorage = Collections.synchronizedList(new ArrayList<>());
-        lock.lock();
-        countOfCars = 5;
-        for (int i = 0; i < countOfCars; i++){
-            new ParkingRepositoryImpl().addCar(carStorage.get(i));
-        }
-    }
+
 }

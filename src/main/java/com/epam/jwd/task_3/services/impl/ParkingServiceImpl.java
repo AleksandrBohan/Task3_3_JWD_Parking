@@ -19,8 +19,6 @@ public class ParkingServiceImpl implements ParkingService{
 
     private int countOfCars;
 
-    private List <Car> carStorage = Collections.synchronizedList(new ArrayList<>());
-
     private Exchanger<Car> carExchanger = new Exchanger<>();
 
     @Override
@@ -30,8 +28,15 @@ public class ParkingServiceImpl implements ParkingService{
     }
 
     @Override
-    public List<Car> fillCarListForParking(CarFactory factory, int countOfCars) {
+    public void fillCarListForParking(CarFactory factory, int countOfCars) {
+
+    }
+
+    @Override
+    public void fillCarListForParking(CarFactory factory, int countOfCars, List<Car> carStorage) {
+        carStorage = Collections.synchronizedList(new ArrayList<>());
         this.countOfCars = countOfCars;
+
       for (int i = 0; i < countOfCars; i++){
 
           new CarRepositoryImpl().save(factory.getMercedesCar(), carStorage);
@@ -50,11 +55,25 @@ public class ParkingServiceImpl implements ParkingService{
           System.out.println(carStorage.get(4));
 
 
-
       }
 
-      return carStorage;
 
     }
 
+    public int getCountOfCars() {
+        return countOfCars;
+    }
+
+    public void setCountOfCars(int countOfCars) {
+        this.countOfCars = countOfCars;
+    }
+
+
+    public Exchanger<Car> getCarExchanger() {
+        return carExchanger;
+    }
+
+    public void setCarExchanger(Exchanger<Car> carExchanger) {
+        this.carExchanger = carExchanger;
+    }
 }

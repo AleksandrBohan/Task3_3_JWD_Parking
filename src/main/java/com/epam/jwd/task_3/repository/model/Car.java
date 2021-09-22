@@ -5,11 +5,11 @@ import java.util.concurrent.atomic.AtomicLong;
 
 public class Car implements Runnable{
 
-    private String nameOfCar;
+    private volatile String nameOfCar;
 
-    private Long personalNumberOfCar;
+    private volatile Long personalNumberOfCar;
 
-    private String seriesOfNumber;
+    private volatile String seriesOfNumber;
 
     public Car(String nameOfCar, Long personalNumberOfCar, String seriesOfNumber){
         setNameOfCar(nameOfCar);
@@ -70,7 +70,8 @@ public class Car implements Runnable{
 
     @Override
     public void run() {
-        System.out.println("Car is driving as thread!!");
+
+        System.out.println("As thread: " + toString());
 
     }
 }
