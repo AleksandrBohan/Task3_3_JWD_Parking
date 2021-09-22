@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -17,6 +19,8 @@ public class CarRepositoryImpl implements CarRepository {
     private Lock lock = new ReentrantLock();
 
     private List <Car> carStorage = Collections.synchronizedList(new ArrayList<>());
+
+    BlockingQueue<Car> queue = new ArrayBlockingQueue<Car>(1, false);
 
 
     @Override
@@ -35,9 +39,10 @@ public class CarRepositoryImpl implements CarRepository {
     @Override
     public void getCarsAndFillParking(List<Car> cars, int countOfCars) {
         lock.lock();
+        this.countOfCars = countOfCars;
         countOfCars *= 5;
        for (int i = 0; i < countOfCars; i++){
-            new ParkingRepositoryImpl().addCar(cars.get(i));
+            new ParkingRepositoryImpl().addCar(cars.get(i), queue);
         }
     }
 

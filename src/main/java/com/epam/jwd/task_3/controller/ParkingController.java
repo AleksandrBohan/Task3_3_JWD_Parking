@@ -1,5 +1,7 @@
 package com.epam.jwd.task_3.controller;
 
+import com.epam.jwd.task_3.repository.impl.ParkingRepositoryImpl;
+import com.epam.jwd.task_3.services.threads.ParkingRepositiryImplProducer;
 import com.epam.jwd.task_3.services.threads.ParkingServiceImplThread;
 import com.epam.jwd.task_3.repository.model.Car;
 import com.epam.jwd.task_3.services.api.CarFactory;
@@ -16,29 +18,7 @@ public class ParkingController {
 
 
     public static void main(String[] args) {
-
-        Scanner scanner = new Scanner(System.in);
-        //How many cars do you want to create 1 - 5 cars, 2 - 10 cars;
-        int countOfCars = scanner.nextInt();
-
-        new ParkingServiceImplThread().setCountOfCars(countOfCars);
-
-        System.out.println("--------------------------------------------------");
-        //What cars do you want to get: 1 - sedan, 2 - hatchback, 3 - minivan;
-        int typeOfCars = scanner.nextInt();
-
-        if (typeOfCars == 1) {
-
-            new Thread(new ParkingServiceImplThread()).start();
-
-        }
-
-
-
-       // ParkingServiceImpl parkingService = new ParkingServiceImpl();
-
-       /* new CarRepositoryImpl().getCarsAndFillParking(parkingService
-                .fillCarListForParking(carFactory, countOfCars), countOfCars);*/
+        (new Thread(new ParkingRepositiryImplProducer())).start();
 
     }
 

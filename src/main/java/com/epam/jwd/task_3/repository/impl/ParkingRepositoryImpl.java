@@ -1,23 +1,22 @@
 package com.epam.jwd.task_3.repository.impl;
 
+
 import com.epam.jwd.task_3.repository.api.ParkingRepository;
 import com.epam.jwd.task_3.repository.model.Car;
-import com.epam.jwd.task_3.services.impl.car_factory.SedanCarFactory;
 
 import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 
-
-
-
-public class ParkingRepositoryImpl implements ParkingRepository, Runnable {
+public class ParkingRepositoryImpl implements ParkingRepository {
 
     private static final int SIZE_OF_PARKING_TIME = 3;
-    private ArrayBlockingQueue<Car> parkingPlaces;
+    private BlockingQueue<Car> parkingPlaces;
 
     @Override
-    public void addCar(Car car) {
-        parkingPlaces = new ArrayBlockingQueue<Car>(1, true);
+    public void addCar(Car car, BlockingQueue<Car> parkingPlaces) {
+        this.parkingPlaces = parkingPlaces;
+        parkingPlaces = new ArrayBlockingQueue<Car>(1, false);
         try {
             boolean parkingCar = parkingPlaces.offer(car, SIZE_OF_PARKING_TIME, TimeUnit.SECONDS);
             System.out.println("Car is trying to park: " + car + "  " + parkingCar);
@@ -44,21 +43,4 @@ public class ParkingRepositoryImpl implements ParkingRepository, Runnable {
         }
     }
 
-    public void run(){
-        ArrayBlockingQueue<Car> parkingPlacesIS = new ArrayBlockingQueue<Car>(1, true);
-        try {
-            boolean parkingCa1r = parkingPlacesIS.offer(new SedanCarFactory().getMercedesCar(), SIZE_OF_PARKING_TIME, TimeUnit.MICROSECONDS);
-            System.out.println("Car is trying to park: " + new SedanCarFactory().getMercedesCar() + "  " );
-
-            if (!parkingCa1r) {
-                System.out.println("Parking was failed! Sleep sometime!");
-            }
-            else  {
-                System.out.println("success!! Car was parked!");
-            }
-
-        } catch (InterruptedException exception) {
-            exception.printStackTrace();
-        }
-    }
 }
