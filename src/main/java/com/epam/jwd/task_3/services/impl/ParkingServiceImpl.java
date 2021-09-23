@@ -50,9 +50,9 @@ public class ParkingServiceImpl implements ParkingService{
         int factoryCapacity = new CarServiceImpl().fillCarListForParking(carFactory, 5, cars).size();
         for (int j = 0; j < factoryCapacity; j++) {
             for (int i = 0; i < factoryCapacity; i++) {
-                new ParkingRepositoryImpl().addPairOfCars(cars.get(i), cars.get(j), parkingPlaces,
+               carOnParking = new ParkingRepositoryImpl().addPairOfCars(cars.get(i), cars.get(j), parkingPlaces,
                         numberForExchange);
-                if (numberForExchange == 1){
+                if (numberForExchange == 1 & carOnParking == true){
 
                     System.out.println(cars.get(i));
                     System.out.println(cars.get(j));
@@ -62,9 +62,11 @@ public class ParkingServiceImpl implements ParkingService{
 
                     producerExchengerThread.setPriority(10);
                     consumerExchengerThread.setPriority(9);
-
+                    System.out.println("\n" + "\n" + "\n");
                     producerExchengerThread.start();
+                    System.out.println();
                     consumerExchengerThread.start();
+                    System.out.println("\n" + "\n" + "\n");
 
                 }
                 if (i % 4 == 0) {
