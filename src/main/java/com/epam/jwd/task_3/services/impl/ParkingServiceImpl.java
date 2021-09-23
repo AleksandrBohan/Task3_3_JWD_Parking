@@ -32,6 +32,7 @@ public class ParkingServiceImpl implements ParkingService{
     Scanner scanner = new Scanner(System.in);
     boolean flagOfFair;
     boolean carOnParking;
+    private Exchanger<Car> exchanger = new Exchanger<>();
 
     private Exchanger<Car> carExchanger = new Exchanger<>();
     List<Car> carStorage;
@@ -43,19 +44,25 @@ public class ParkingServiceImpl implements ParkingService{
     }
 
     public void fillParkingFromCarList() {
-
+        int numberForExchange = 1;
         flagOfFair = true;
         parkingPlaces = new ArrayBlockingQueue<Car>(1, flagOfFair);
         int factoryCapacity = new CarServiceImpl().fillCarListForParking(carFactory, 5, cars).size();
+        for (int j = 0; j < factoryCapacity; j++) {
+            for (int i = 0; i < factoryCapacity; i++) {
+                new ParkingRepositoryImpl().addPairOfCars(cars.get(i), cars.get(j), parkingPlaces,
+                        numberForExchange);
+                if (numberForExchange == 1){
+                    new Thread(new ConsumerForExchange(exchanger, cars.get(i))).start();
+                    new Thread(new ProducerForExchange(exchanger, cars.get(j))).start();
+                }
+                if (i % 4 == 0) {
+                    flagOfFair = false;
+                    new ParkingRepositoryImpl().deleteCar(parkingPlaces);
+                }
 
-        for (int i = 0; i < factoryCapacity; i++) {
-            new ParkingRepositoryImpl().addCar(cars.get(i), parkingPlaces);
-            if (i % 4 == 0) {
-                flagOfFair = false;
-                new ParkingRepositoryImpl().deleteCar(parkingPlaces);
+
             }
-
-
         }
     }
 

@@ -1,6 +1,6 @@
 package com.epam.jwd.task_3.controller;
 
-import com.epam.jwd.task_3.repository.impl.ParkingRepositoryImpl;
+
 import com.epam.jwd.task_3.services.threads.ParkingRepositiryImplProducer;
 import com.epam.jwd.task_3.services.threads.ParkingServiceImplThread;
 import com.epam.jwd.task_3.repository.model.Car;
@@ -20,7 +20,7 @@ public class ParkingController {
     public static void main(String[] args) {
         Thread thread = new Thread(new ParkingRepositiryImplProducer());
         thread.start();
-        System.out.println(thread.isAlive());
+
 
     }
 

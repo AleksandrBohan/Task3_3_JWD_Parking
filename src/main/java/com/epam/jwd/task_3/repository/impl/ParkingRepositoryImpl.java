@@ -28,18 +28,31 @@ public class ParkingRepositoryImpl implements ParkingRepository {
     boolean flagOfFair;
 
     @Override
-    public void addCar(Car car, BlockingQueue<Car> parkingPlaces) {
+    public void addPairOfCars(Car firstCar, Car secondCar, BlockingQueue<Car> parkingPlaces, int numberForExchange) {
         try {
             System.out.println("-----------------------------------------");
-            System.out.println("Car is trying to park: " + car.toString());
+            System.out.println("Car1 is trying to park: " + firstCar.toString());
+            System.out.println("Car2 is trying to park: " + secondCar.toString());
             System.out.println("-----------------------------------------");
-            if (parkingPlaces.offer(car, SIZE_OF_PARKING_TIME, TimeUnit.SECONDS) == true){
+            if (parkingPlaces.offer(firstCar, SIZE_OF_PARKING_TIME, TimeUnit.SECONDS) == true){
                 System.out.println("-----------------------------------------------------");
-                System.out.println(car.toString() + "\n" + " was parked!!");
+                System.out.println(firstCar.toString() + "\n" + " was parked!!");
                 System.out.println("-----------------------------------------------------");
             } else {
                 System.out.println("-----------------------------------------------------");
-                System.out.println(car.toString() + "\n" + " couldn't park!!");
+                System.out.println(firstCar.toString() + "\n" + " couldn't park!!");
+                System.out.println("-----------------------------------------------------");
+            }
+
+            if (parkingPlaces.offer(secondCar, SIZE_OF_PARKING_TIME, TimeUnit.SECONDS) == true){
+                System.out.println("-----------------------------------------------------");
+                System.out.println(secondCar.toString() + "\n" + " was parked!!");
+                System.out.println("-----------------------------------------------------");
+            }
+
+            else {
+                System.out.println("-----------------------------------------------------");
+                System.out.println(secondCar.toString() + "\n" + " couldn't park!!");
                 System.out.println("-----------------------------------------------------");
             }
         } catch (InterruptedException exception) {

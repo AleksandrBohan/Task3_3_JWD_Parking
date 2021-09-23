@@ -6,8 +6,7 @@ import java.util.concurrent.BlockingQueue;
 
 public interface ParkingRepository {
 
-    void addCar(Car car, BlockingQueue<Car> parkingPlaces);
-
+    void addPairOfCars(Car firstCar, Car secondCar, BlockingQueue<Car> parkingPlaces, int numberForExchange);
     void deleteCar(BlockingQueue<Car> parkingPlaces);
 
 }
