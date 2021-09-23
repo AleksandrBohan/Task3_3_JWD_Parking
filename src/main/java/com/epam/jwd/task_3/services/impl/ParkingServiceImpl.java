@@ -18,7 +18,7 @@ import java.util.Scanner;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Exchanger;
-import java.util.concurrent.TimeUnit;
+
 
 
 public class ParkingServiceImpl implements ParkingService{
@@ -46,15 +46,26 @@ public class ParkingServiceImpl implements ParkingService{
     public void fillParkingFromCarList() {
         int numberForExchange = 1;
         flagOfFair = true;
-        parkingPlaces = new ArrayBlockingQueue<Car>(1, flagOfFair);
+        parkingPlaces = new ArrayBlockingQueue<Car>(5, flagOfFair);
         int factoryCapacity = new CarServiceImpl().fillCarListForParking(carFactory, 5, cars).size();
         for (int j = 0; j < factoryCapacity; j++) {
             for (int i = 0; i < factoryCapacity; i++) {
                 new ParkingRepositoryImpl().addPairOfCars(cars.get(i), cars.get(j), parkingPlaces,
                         numberForExchange);
                 if (numberForExchange == 1){
-                    new Thread(new ConsumerForExchange(exchanger, cars.get(i))).start();
-                    new Thread(new ProducerForExchange(exchanger, cars.get(j))).start();
+
+                    System.out.println(cars.get(i));
+                    System.out.println(cars.get(j));
+
+                    Thread consumerExchengerThread = new Thread(new ConsumerForExchange(exchanger, cars.get(i)));
+                    Thread producerExchengerThread = new Thread(new ProducerForExchange(exchanger, cars.get(j)));
+
+                    producerExchengerThread.setPriority(10);
+                    consumerExchengerThread.setPriority(9);
+
+                    producerExchengerThread.start();
+                    consumerExchengerThread.start();
+
                 }
                 if (i % 4 == 0) {
                     flagOfFair = false;
