@@ -18,7 +18,9 @@ public class ParkingController {
 
 
     public static void main(String[] args) {
-        (new Thread(new ParkingRepositiryImplProducer())).start();
+        Thread thread = new Thread(new ParkingRepositiryImplProducer());
+        thread.start();
+        System.out.println(thread.isAlive());
 
     }
 

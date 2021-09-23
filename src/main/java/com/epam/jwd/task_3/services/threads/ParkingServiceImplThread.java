@@ -26,9 +26,9 @@ public class ParkingServiceImplThread implements Runnable {
     @Override
     public void run() {
 
-        new ParkingServiceImpl().fillCarListForParking(factory, 5, carStorage);
+        //new ParkingServiceImpl().fillCarListForParking(factory, 5, carStorage);
 
-        new CarRepositoryImpl().getCarsAndFillParking(carStorage, 5);
+       // new CarRepositoryImpl().getCarsAndFillParking(carStorage, 5);
 
         }
 

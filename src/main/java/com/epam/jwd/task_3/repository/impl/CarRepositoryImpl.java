@@ -18,7 +18,7 @@ public class CarRepositoryImpl implements CarRepository {
 
     private Lock lock = new ReentrantLock();
 
-    private List <Car> carStorage = Collections.synchronizedList(new ArrayList<>());
+    private List <Car> carStorage = Collections.synchronizedList(new ArrayList<>()); /// easy ArrayList
 
     BlockingQueue<Car> queue = new ArrayBlockingQueue<Car>(1, false);
 
@@ -27,34 +27,14 @@ public class CarRepositoryImpl implements CarRepository {
     public void save(Car car, List<Car> carStorage) {
         setCarStorage(carStorage);
         try{
-            lock.lock();
             carStorage.add(car);
-            lock.unlock();
         }
         catch (Exception exception){
            //TODO write exception for it!!!
         }
     }
 
-    @Override
-    public void getCarsAndFillParking(List<Car> cars, int countOfCars) {
-        lock.lock();
-        this.countOfCars = countOfCars;
-        countOfCars *= 5;
-       for (int i = 0; i < countOfCars; i++){
-            new ParkingRepositoryImpl().addCar();
-        }
-    }
 
-
-    @Override
-    public Car findByPersonalNumberOfCar(Long personalNumber) {
-        return carStorage.stream()
-                .filter(car -> personalNumber.equals(car.getPersonalNumberOfCar()))
-                .findFirst()
-                .orElse(null);
-
-    }
 
     @Override
     public boolean delete(Car car) {

@@ -7,8 +7,7 @@ import java.util.List;
 public interface CarRepository {
 
     void save(Car car, List<Car> carStorage);
-    void getCarsAndFillParking(List<Car> cars, int countOfCars);
-    Car findByPersonalNumberOfCar(Long personalNumber);
+
     boolean delete(Car car);
 
 }
