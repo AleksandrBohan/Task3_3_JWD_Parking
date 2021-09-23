@@ -42,7 +42,7 @@ public class CarRepositoryImpl implements CarRepository {
         this.countOfCars = countOfCars;
         countOfCars *= 5;
        for (int i = 0; i < countOfCars; i++){
-            new ParkingRepositoryImpl().addCar(cars.get(i), queue);
+            new ParkingRepositoryImpl().addCar();
         }
     }
 

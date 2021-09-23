@@ -10,5 +10,5 @@ public interface ParkingService {
     void swapNearbyCars(Car car, Car otherCar);
     void fillCarListForParking(CarFactory factory, int countOfCars);
 
-    void fillCarListForParking(CarFactory factory, int countOfCars, List<Car> carStorage);
+    List<Car> fillCarListForParking(CarFactory factory, int countOfCars, List<Car> carStorage);
 }

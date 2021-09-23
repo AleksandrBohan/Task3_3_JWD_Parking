@@ -3,7 +3,7 @@ package com.epam.jwd.task_3.repository.model;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicLong;
 
-public class Car implements Runnable{
+public class Car {
 
     private volatile String nameOfCar;
 
@@ -67,11 +67,4 @@ public class Car implements Runnable{
                 '}';
     }
 
-
-    @Override
-    public void run() {
-
-        System.out.println("As thread: " + toString());
-
-    }
 }

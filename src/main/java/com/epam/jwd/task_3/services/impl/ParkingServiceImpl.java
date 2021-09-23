@@ -1,7 +1,6 @@
 package com.epam.jwd.task_3.services.impl;
 
 import com.epam.jwd.task_3.repository.impl.CarRepositoryImpl;
-import com.epam.jwd.task_3.repository.impl.ParkingRepositoryImpl;
 import com.epam.jwd.task_3.repository.model.Car;
 import com.epam.jwd.task_3.services.api.CarFactory;
 import com.epam.jwd.task_3.services.api.ParkingService;
@@ -9,8 +8,6 @@ import com.epam.jwd.task_3.services.exchanger.ConsumerForExchange;
 import com.epam.jwd.task_3.services.exchanger.ProducerForExchange;
 
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import java.util.concurrent.Exchanger;
@@ -35,7 +32,7 @@ public class ParkingServiceImpl implements ParkingService{
     }
 
     @Override
-    public void fillCarListForParking(CarFactory factory, int countOfCars, List<Car> carStorage) {
+    public List<Car> fillCarListForParking(CarFactory factory, int countOfCars, List<Car> carStorage) {
 
         this.countOfCars = countOfCars;
 
@@ -59,7 +56,7 @@ public class ParkingServiceImpl implements ParkingService{
 
       }
 
-
+        return carStorage;
     }
 
     public int getCountOfCars() {
