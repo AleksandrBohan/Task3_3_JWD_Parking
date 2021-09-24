@@ -21,7 +21,7 @@ import java.util.concurrent.Exchanger;
 
 
 
-public class ParkingServiceImpl implements ParkingService{
+public class ParkingServiceImpl implements ParkingService, Runnable{
 
     private int countOfCars;
 
@@ -45,46 +45,58 @@ public class ParkingServiceImpl implements ParkingService{
 
     public void fillParkingFromCarList() {
         int numberForExchange = 1;
-        parkingPlaces = new ArrayBlockingQueue<Car>(3, true);
+        parkingPlaces = new ArrayBlockingQueue<Car>(20, true);
 
         int factoryCapacity = new CarServiceImpl().fillCarListForParking(carFactory, 5, cars).size();
         int countOfIteration = 0;
         int countOfDelete = 0;
+        for (int j = 0; j < factoryCapacity; j++) {
             for (int i = 0; i < factoryCapacity; i++) {
-                countOfIteration++;
-                Thread producerExchengerThread = null;
-                Thread consumerExchengerThread = null;
-                int secondInCarPair = i%2;
-                new ParkingRepositoryImpl().addPairOfCars(cars.get(i), parkingPlaces,
-                        numberForExchange);
-                if (secondInCarPair == 0 || i == 0) {
+                if (cars.get(i) != cars.get(j)) {
+                    countOfIteration++;
 
-                   producerExchengerThread = new Thread(new ProducerForExchange(exchanger, cars.get(i)));
 
-                } else {
-                   consumerExchengerThread = new Thread(new ConsumerForExchange(exchanger, cars.get(i)));
-                }
+                    if ((new ParkingRepositoryImpl().addPairOfCars(cars.get(i), cars.get(j), parkingPlaces,
+                            numberForExchange) == true) & countOfDelete == 0) {
+                       swapNearbyCars(cars.get(i), cars.get(j));
+                       countOfDelete = 0;
 
-                    if (numberForExchange == 1 & countOfIteration == 2 & carOnParking == true & countOfDelete != 1) {
-                        System.out.println("\n" + "\n" + "\n");
-                        producerExchengerThread.start();
-                        System.out.println();
-                        consumerExchengerThread.start();
-                        System.out.println("\n" + "\n" + "\n");
-                        countOfIteration = 0;
-                        countOfDelete = 0;
+
+
 
                     } else {
-                        System.out.println("Exchange isn't avaliable!");
+                        System.out.println("Exchange isn't availiable!!");
                     }
+               /* if (i % 2 == 0 || i == 0) {
+
+                    producerExchengerThread = new Thread(new ProducerForExchange(exchanger, cars.get(i)));
+
+                } else {
+                    consumerExchengerThread = new Thread(new ConsumerForExchange(exchanger, cars.get(i)));
+                }
+
+                if (numberForExchange == 1 & countOfIteration == 2 & countOfDelete != 1) {
+                    System.out.println("\n" + "\n" + "\n");
+                    producerExchengerThread.start();
+                    System.out.println();
+                    consumerExchengerThread.start();
+                    System.out.println("\n" + "\n" + "\n");
+                    countOfIteration = 0;
+                    countOfDelete = 0;
+
+                } else {
+                    System.out.println("Exchange isn't avaliable!");
+                }*/
                     if (i % 6 == 0) {
-                      new ParkingRepositoryImpl().deleteCar(parkingPlaces);
+                        new ParkingRepositoryImpl().deleteCar(parkingPlaces);
                         countOfDelete++;
                     }
 
 
                 }
             }
+        }
+    }
 
 
     public int getCountOfCars() {
@@ -102,5 +114,10 @@ public class ParkingServiceImpl implements ParkingService{
 
     public void setCarExchanger(Exchanger<Car> carExchanger) {
         this.carExchanger = carExchanger;
+    }
+
+    @Override
+    public void run() {
+
     }
 }
