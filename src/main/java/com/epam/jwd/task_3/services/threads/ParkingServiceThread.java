@@ -14,11 +14,12 @@ import java.util.concurrent.ArrayBlockingQueue;
 
 
 
-public class ParkingRepositiryImplProducer implements Runnable {
+public class ParkingServiceThread implements Runnable {
 
     @Override
     public void run() {
         new ParkingServiceImpl().fillParkingFromCarList();
+
 
     }
 }

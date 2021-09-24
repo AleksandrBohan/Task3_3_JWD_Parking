@@ -1,15 +1,10 @@
 package com.epam.jwd.task_3.controller;
 
 
-import com.epam.jwd.task_3.services.threads.ParkingRepositiryImplProducer;
-import com.epam.jwd.task_3.services.threads.ParkingServiceImplThread;
+import com.epam.jwd.task_3.services.threads.ParkingServiceThread;
 import com.epam.jwd.task_3.repository.model.Car;
-import com.epam.jwd.task_3.services.api.CarFactory;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Scanner;
 
 public class ParkingController {
     private int countOfCars;
@@ -18,7 +13,8 @@ public class ParkingController {
 
 
     public static void main(String[] args) {
-        Thread thread = new Thread(new ParkingRepositiryImplProducer());
+        Thread thread = new Thread(new ParkingServiceThread());
+        thread.setPriority(8);
         thread.start();
 
 

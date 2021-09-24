@@ -20,7 +20,9 @@ public class ProducerForExchange implements Runnable {
     public void run() {
         try {
             car = exchanger.exchange(car);
+            System.out.println("-------------------------------------------" + "\n");
             System.out.println("Producer received car: " + car.toString());
+            System.out.println("\n" + "-------------------------------------------");
         } catch (InterruptedException exception) {
             exception.printStackTrace();
         }
