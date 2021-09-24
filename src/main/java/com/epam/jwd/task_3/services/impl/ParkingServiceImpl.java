@@ -1,6 +1,6 @@
 package com.epam.jwd.task_3.services.impl;
 
-import com.epam.jwd.task_3.repository.impl.CarRepositoryImpl;
+
 import com.epam.jwd.task_3.repository.impl.ParkingRepositoryImpl;
 import com.epam.jwd.task_3.repository.model.Car;
 import com.epam.jwd.task_3.services.api.CarFactory;
@@ -45,43 +45,46 @@ public class ParkingServiceImpl implements ParkingService{
 
     public void fillParkingFromCarList() {
         int numberForExchange = 1;
-        flagOfFair = true;
-        parkingPlaces = new ArrayBlockingQueue<Car>(5, flagOfFair);
+        parkingPlaces = new ArrayBlockingQueue<Car>(3, true);
+
         int factoryCapacity = new CarServiceImpl().fillCarListForParking(carFactory, 5, cars).size();
-        for (int j = 0; j < factoryCapacity; j++) {
+        int countOfIteration = 0;
+        int countOfDelete = 0;
             for (int i = 0; i < factoryCapacity; i++) {
-                if (cars.get(i) != cars.get(j)) {
-                    carOnParking = new ParkingRepositoryImpl().addPairOfCars(cars.get(i), cars.get(j), parkingPlaces,
-                            numberForExchange);
-                    if (numberForExchange == 1 & carOnParking == true) {
+                countOfIteration++;
+                Thread producerExchengerThread = null;
+                Thread consumerExchengerThread = null;
+                int secondInCarPair = i%2;
+                new ParkingRepositoryImpl().addPairOfCars(cars.get(i), parkingPlaces,
+                        numberForExchange);
+                if (secondInCarPair == 0 || i == 0) {
 
-                        System.out.println(cars.get(i));
-                        System.out.println(cars.get(j));
+                   producerExchengerThread = new Thread(new ProducerForExchange(exchanger, cars.get(i)));
 
-                        Thread consumerExchengerThread = new Thread(new ConsumerForExchange(exchanger, cars.get(i)));
-                        Thread producerExchengerThread = new Thread(new ProducerForExchange(exchanger, cars.get(j)));
+                } else {
+                   consumerExchengerThread = new Thread(new ConsumerForExchange(exchanger, cars.get(i)));
+                }
 
-                        producerExchengerThread.setPriority(10);
-                        consumerExchengerThread.setPriority(9);
+                    if (numberForExchange == 1 & countOfIteration == 2 & carOnParking == true & countOfDelete != 1) {
                         System.out.println("\n" + "\n" + "\n");
                         producerExchengerThread.start();
                         System.out.println();
                         consumerExchengerThread.start();
                         System.out.println("\n" + "\n" + "\n");
+                        countOfIteration = 0;
+                        countOfDelete = 0;
 
+                    } else {
+                        System.out.println("Exchange isn't avaliable!");
                     }
-                    if (i % 4 == 0) {
-                        flagOfFair = false;
-                        new ParkingRepositoryImpl().deleteCar(parkingPlaces);
+                    if (i % 6 == 0) {
+                      new ParkingRepositoryImpl().deleteCar(parkingPlaces);
+                        countOfDelete++;
                     }
 
 
                 }
             }
-        }
-    }
-
-
 
 
     public int getCountOfCars() {
