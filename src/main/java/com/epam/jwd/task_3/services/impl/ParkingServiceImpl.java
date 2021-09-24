@@ -50,31 +50,33 @@ public class ParkingServiceImpl implements ParkingService{
         int factoryCapacity = new CarServiceImpl().fillCarListForParking(carFactory, 5, cars).size();
         for (int j = 0; j < factoryCapacity; j++) {
             for (int i = 0; i < factoryCapacity; i++) {
-               carOnParking = new ParkingRepositoryImpl().addPairOfCars(cars.get(i), cars.get(j), parkingPlaces,
-                        numberForExchange);
-                if (numberForExchange == 1 & carOnParking == true){
+                if (cars.get(i) != cars.get(j)) {
+                    carOnParking = new ParkingRepositoryImpl().addPairOfCars(cars.get(i), cars.get(j), parkingPlaces,
+                            numberForExchange);
+                    if (numberForExchange == 1 & carOnParking == true) {
 
-                    System.out.println(cars.get(i));
-                    System.out.println(cars.get(j));
+                        System.out.println(cars.get(i));
+                        System.out.println(cars.get(j));
 
-                    Thread consumerExchengerThread = new Thread(new ConsumerForExchange(exchanger, cars.get(i)));
-                    Thread producerExchengerThread = new Thread(new ProducerForExchange(exchanger, cars.get(j)));
+                        Thread consumerExchengerThread = new Thread(new ConsumerForExchange(exchanger, cars.get(i)));
+                        Thread producerExchengerThread = new Thread(new ProducerForExchange(exchanger, cars.get(j)));
 
-                    producerExchengerThread.setPriority(10);
-                    consumerExchengerThread.setPriority(9);
-                    System.out.println("\n" + "\n" + "\n");
-                    producerExchengerThread.start();
-                    System.out.println();
-                    consumerExchengerThread.start();
-                    System.out.println("\n" + "\n" + "\n");
+                        producerExchengerThread.setPriority(10);
+                        consumerExchengerThread.setPriority(9);
+                        System.out.println("\n" + "\n" + "\n");
+                        producerExchengerThread.start();
+                        System.out.println();
+                        consumerExchengerThread.start();
+                        System.out.println("\n" + "\n" + "\n");
+
+                    }
+                    if (i % 4 == 0) {
+                        flagOfFair = false;
+                        new ParkingRepositoryImpl().deleteCar(parkingPlaces);
+                    }
+
 
                 }
-                if (i % 4 == 0) {
-                    flagOfFair = false;
-                    new ParkingRepositoryImpl().deleteCar(parkingPlaces);
-                }
-
-
             }
         }
     }
