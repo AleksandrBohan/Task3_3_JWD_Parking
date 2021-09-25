@@ -1,7 +1,8 @@
 package com.epam.jwd.task_3.controller;
 
 
-import com.epam.jwd.task_3.services.threads.ParkingServiceThread;
+import com.epam.jwd.task_3.services.impl.ParkingServiceImpl;
+
 import com.epam.jwd.task_3.repository.model.Car;
 
 import java.util.List;
@@ -13,8 +14,8 @@ public class ParkingController {
 
 
     public static void main(String[] args) {
-        Thread thread = new Thread(new ParkingServiceThread());
-        thread.setPriority(8);
+        Thread thread = new Thread(new ParkingServiceImpl());
+        thread.setPriority(1);
         thread.start();
 
 

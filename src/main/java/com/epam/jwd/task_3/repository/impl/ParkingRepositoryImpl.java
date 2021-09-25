@@ -28,9 +28,10 @@ public class ParkingRepositoryImpl implements ParkingRepository {
     CarFactory carFactory = new SedanCarFactory();
     List<Car> cars = Collections.synchronizedList(new ArrayList<>());
     Scanner scanner = new Scanner(System.in);
-    boolean carOnParking;
-    boolean addCarFirst;
-    boolean addCarSecond;
+    boolean carOnParkingFirst;
+    boolean carOnParkingSecond;
+    boolean exchangeAbility;
+
     private Exchanger<Car> exchanger = new Exchanger<>();
 
     @Override
@@ -43,30 +44,30 @@ public class ParkingRepositoryImpl implements ParkingRepository {
             System.out.println("Car2 is trying to park: " + secondCar.toString());
             System.out.println("-----------------------------------------");
             if (parkingPlaces.offer(firstCar, SIZE_OF_PARKING_TIME, TimeUnit.SECONDS) == true){
-                carOnParking = true;
+                carOnParkingFirst = true;
                 System.out.println("-----------------------------------------------------");
                 System.out.println(firstCar.toString() + "\n" + " was parked!!");
                 System.out.println("-----------------------------------------------------");
                 if (parkingPlaces.offer(secondCar, SIZE_OF_PARKING_TIME, TimeUnit.SECONDS) == true){
-                    carOnParking = true;
+
                     System.out.println("-----------------------------------------------------");
                     System.out.println(secondCar.toString() + "\n" + " was parked!!");
                     System.out.println("-----------------------------------------------------");
-                    return carOnParking;
+
                 } else if (parkingPlaces.offer(secondCar, SIZE_OF_PARKING_TIME, TimeUnit.SECONDS) == false){
-                    carOnParking = false;
+
                     System.out.println("-----------------------------------------------------");
                     System.out.println(secondCar.toString() + "\n" + " couldn't park!!");
                     System.out.println("-----------------------------------------------------");
-                    return carOnParking;
+
                 }
-                return carOnParking;
+                return carOnParkingFirst;
             } else if (parkingPlaces.offer(firstCar, SIZE_OF_PARKING_TIME, TimeUnit.SECONDS) == false){
-                carOnParking = false;
+               carOnParkingFirst = false;
                 System.out.println("-----------------------------------------------------");
                 System.out.println(firstCar.toString() + "\n" + " couldn't park!!");
                 System.out.println("-----------------------------------------------------");
-                return carOnParking;
+                return carOnParkingFirst;
 
             }
 
@@ -74,7 +75,7 @@ public class ParkingRepositoryImpl implements ParkingRepository {
         exception.printStackTrace();
     }
 
-        return carOnParking;
+        return carOnParkingFirst;
     }
 
     @Override
