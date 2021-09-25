@@ -52,19 +52,20 @@ public class ParkingServiceImpl implements ParkingService, Runnable{
         int countOfDelete = 0;
         for (int j = 0; j < factoryCapacity; j++) {
             for (int i = 0; i < factoryCapacity; i++) {
-                if (!(cars.get(i).equals(cars.get(j)))) {
+                if ((!(cars.get(i).equals(cars.get(j)))))
+                        {
 
                         if ((new ParkingRepositoryImpl().addPairOfCars(cars.get(i), cars.get(j), parkingPlaces,
                                 numberForExchange) == true)) {
                                 if (countOfDelete == 1){
                                     swapNearbyCars(cars.get(j), car);
-                                } else {
+                                } else if (countOfDelete == 0){
                                     swapNearbyCars(cars.get(i), cars.get(j));
                                 }
                             if (i % 6 == 0) {
                                 new ParkingRepositoryImpl().deleteCar(parkingPlaces);
                                 countOfDelete = 1;
-                                car = cars.get(j);
+                                car = cars.get(i);
 
                             }
                         } else {
