@@ -3,15 +3,18 @@ package com.epam.jwd.task_3.controller;
 
 import com.epam.jwd.task_3.services.impl.ParkingServiceImpl;
 
-import com.epam.jwd.task_3.repository.model.Car;
 import com.epam.jwd.task_3.view.ParkingView;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.util.List;
 import java.util.Scanner;
+
+
+
 
 public class ParkingController {
 
-    private List<Car> cars;
+    private static final Logger logger = LogManager.getLogger(ParkingController.class);
 
     public static void main(String[] args) {
 
@@ -20,21 +23,17 @@ public class ParkingController {
         thread.start();
     }
 
-    public List<Car> getCars() {
-        return cars;
-    }
-
-    public void setCars(List<Car> cars) {
-        this.cars = cars;
-    }
-
     public int setCarNumber(){
         ParkingView carsView = new ParkingView();
         Scanner carsScanner = new Scanner(System.in);
 
         carsView.getCountOfCars();
-
         String countOfCars = carsScanner.nextLine();
+
+        return getCarNumberAfterInput(countOfCars);
+    }
+
+    public int getCarNumberAfterInput(String countOfCars) {
 
         int carsNumber;
 
@@ -61,7 +60,7 @@ public class ParkingController {
                 break;
 
             default:
-                throw new IllegalStateException("Unexpected value: " + countOfCars);
+                throw  new IllegalStateException("Unexpected value: " + countOfCars);
 
         }
 

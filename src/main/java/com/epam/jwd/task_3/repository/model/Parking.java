@@ -2,19 +2,23 @@ package com.epam.jwd.task_3.repository.model;
 
 import java.util.Objects;
 import java.util.concurrent.ArrayBlockingQueue;
-
-
+import java.util.concurrent.BlockingQueue;
 
 
 public class Parking {
 
-    private ArrayBlockingQueue<Car> parkingPlaces = new ArrayBlockingQueue<Car>(1);
+    private BlockingQueue<Car> parkingPlaces = new ArrayBlockingQueue<Car>(1);
 
-    public ArrayBlockingQueue<Car> getParkingPlaces() {
+    public Parking(BlockingQueue<Car> parkingPlaces){
+        setParkingPlaces(parkingPlaces);
+    }
+
+
+    public BlockingQueue<Car> getParkingPlaces() {
         return parkingPlaces;
     }
 
-    public void setParkingPlaces(ArrayBlockingQueue<Car> parkingPlaces) {
+    public void setParkingPlaces(BlockingQueue<Car> parkingPlaces) {
         this.parkingPlaces = parkingPlaces;
     }
 

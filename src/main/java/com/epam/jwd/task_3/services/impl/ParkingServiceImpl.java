@@ -9,6 +9,8 @@ import com.epam.jwd.task_3.services.api.ParkingService;
 import com.epam.jwd.task_3.services.exchanger.ConsumerForExchange;
 import com.epam.jwd.task_3.services.exchanger.ProducerForExchange;
 import com.epam.jwd.task_3.services.impl.car_factory.SedanCarFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
 import java.util.ArrayList;
@@ -29,7 +31,9 @@ public class ParkingServiceImpl implements ParkingService, Runnable {
 
     private static final int PRIORITY_FOR_CONSUMER_THREAD = 5;
 
-    private static final int ELEMENT_REMOVAL_RATE = 6;
+    private static final int ELEMENT_REMOVAL_RATE = 4;
+
+    private static final Logger logger = LogManager.getLogger(ParkingServiceImpl.class);
 
     @Override
     public void swapNearbyCars(Car car, Car otherCar) {
@@ -52,8 +56,12 @@ public class ParkingServiceImpl implements ParkingService, Runnable {
         Car car = null;
         ParkingController parkingController = new ParkingController();
         List<Car> cars = Collections.synchronizedList(new ArrayList<>());
-        int factoryCapacity = new CarServiceImpl().fillCarListForParking(carFactory, parkingController
-                .setCarNumber(), cars).size();
+        int factoryCapacity = 0;
+        try {
+            factoryCapacity = new CarServiceImpl().fillCarListForParking(carFactory, parkingController.setCarNumber(), cars).size();
+        } catch (Exception e) {
+           logger.error("IllegalStateException in fillParkingFromCarList!");
+        }
         BlockingQueue<Car> parkingPlaces = new ArrayBlockingQueue<Car>(parkingController
                 .setParkingPlacesNumber(), true);
 
