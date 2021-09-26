@@ -8,13 +8,7 @@ import java.util.concurrent.ArrayBlockingQueue;
 
 public class Parking {
 
-    private static final int SIZE_OF_PARKING = 5;
-
     private ArrayBlockingQueue<Car> parkingPlaces = new ArrayBlockingQueue<Car>(1);
-
-    public static int getSizeOfParking() {
-        return SIZE_OF_PARKING;
-    }
 
     public ArrayBlockingQueue<Car> getParkingPlaces() {
         return parkingPlaces;

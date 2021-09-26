@@ -29,42 +29,49 @@ public class ParkingController {
     }
 
     public int setCarNumber(){
-        ParkingView parkingView = new ParkingView();
+        ParkingView carsView = new ParkingView();
+        Scanner carsScanner = new Scanner(System.in);
 
-        Scanner parkingScanner = new Scanner(System.in);
-        parkingView.getCountOfCars();
+        carsView.getCountOfCars();
 
-        String countOfCars = parkingScanner.nextLine();
+        String countOfCars = carsScanner.nextLine();
 
         int carsNumber;
 
         switch (countOfCars) {
+
             case "1":
                 carsNumber = 1;
                 break;
+
             case "2":
                 carsNumber = 2;
                 break;
+
             case "3":
                 carsNumber = 3;
                 break;
+
             case "4":
                 carsNumber = 4;
                 break;
+
             case "5":
                 carsNumber = 5;
                 break;
+
             default:
                 throw new IllegalStateException("Unexpected value: " + countOfCars);
+
         }
+
         return carsNumber;
+
     }
 
    public int setParkingPlacesNumber(){
         ParkingView parkingView = new ParkingView();
-
         Scanner parkingScanner = new Scanner(System.in);
-
 
         parkingView.getCountOfParkingPlaces();
 
@@ -73,27 +80,35 @@ public class ParkingController {
         int parkingPlacesNumber;
 
         switch (countOfParkingPlaces) {
+
             case "1":
                 parkingPlacesNumber = 5;
                 break;
+
             case "2":
                 parkingPlacesNumber = 10;
                 break;
+
             case "3":
                 parkingPlacesNumber = 15;
                 break;
+
             case "4":
                 parkingPlacesNumber = 20;
                 break;
+
             case "5":
                 parkingPlacesNumber = 25;
                 break;
+
             default:
                 throw new IllegalStateException("Unexpected value: " + countOfParkingPlaces);
-        }
-        return parkingPlacesNumber;
-    }
 
+        }
+
+        return parkingPlacesNumber;
+
+    }
 
 }
 

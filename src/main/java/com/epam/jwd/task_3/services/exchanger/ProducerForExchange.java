@@ -4,6 +4,9 @@ import com.epam.jwd.task_3.repository.model.Car;
 
 import java.util.concurrent.Exchanger;
 
+
+
+
 public class ProducerForExchange implements Runnable {
 
     private Exchanger<Car> exchanger;
@@ -23,9 +26,12 @@ public class ProducerForExchange implements Runnable {
             System.out.println("-------------------------------------------" + "\n");
             System.out.println("Producer received car: " + car.toString());
             System.out.println("\n" + "-------------------------------------------");
+
         } catch (InterruptedException exception) {
             exception.printStackTrace();
+
         }
+
     }
 
     public Exchanger<Car> getExchanger() {
@@ -43,4 +49,5 @@ public class ProducerForExchange implements Runnable {
     public void setCar(Car car) {
         this.car = car;
     }
+
 }

@@ -7,7 +7,7 @@ public class Car {
 
     private volatile String nameOfCar;
 
-    private Long personalNumberOfCar;
+    private volatile Long personalNumberOfCar;
 
     private volatile String seriesOfNumber;
 

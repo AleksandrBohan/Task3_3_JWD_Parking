@@ -10,15 +10,10 @@ import java.util.List;
 
 public class CarServiceImpl implements CarService {
 
-    private int countOfCars;
-
     @Override
     public List<Car> fillCarListForParking(CarFactory factory, int countOfCars, List<Car> carStorage) {
 
-        this.countOfCars = countOfCars;
-
         for (int i = 0; i < countOfCars; i++){
-
             new CarRepositoryImpl().save(factory.getMercedesCar(), carStorage);
             System.out.println(carStorage.get(0));
 
@@ -34,9 +29,10 @@ public class CarServiceImpl implements CarService {
             new CarRepositoryImpl().save(factory.getRenaultCar(), carStorage);
             System.out.println(carStorage.get(4));
 
-
         }
 
         return carStorage;
+
     }
+
 }

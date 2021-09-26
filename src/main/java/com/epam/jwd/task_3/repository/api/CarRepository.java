@@ -8,6 +8,4 @@ public interface CarRepository {
 
     void save(Car car, List<Car> carStorage);
 
-    boolean delete(Car car);
-
 }

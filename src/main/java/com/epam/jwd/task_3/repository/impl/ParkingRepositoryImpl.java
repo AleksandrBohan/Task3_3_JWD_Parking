@@ -1,21 +1,10 @@
 package com.epam.jwd.task_3.repository.impl;
 
-
 import com.epam.jwd.task_3.repository.api.ParkingRepository;
 import com.epam.jwd.task_3.repository.model.Car;
-import com.epam.jwd.task_3.services.api.CarFactory;
 
-import com.epam.jwd.task_3.services.exchanger.ConsumerForExchange;
-import com.epam.jwd.task_3.services.exchanger.ProducerForExchange;
-import com.epam.jwd.task_3.services.impl.car_factory.SedanCarFactory;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Scanner;
 
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.Exchanger;
 import java.util.concurrent.TimeUnit;
 
 
@@ -24,44 +13,38 @@ import java.util.concurrent.TimeUnit;
 public class ParkingRepositoryImpl implements ParkingRepository {
 
     private static final int SIZE_OF_PARKING_TIME = 3;
-    private BlockingQueue<Car> parkingPlaces;
-    CarFactory carFactory = new SedanCarFactory();
-    List<Car> cars = Collections.synchronizedList(new ArrayList<>());
-    Scanner scanner = new Scanner(System.in);
-    boolean carOnParkingFirst;
-    boolean carOnParkingSecond;
-    boolean exchangeAbility;
 
-    private Exchanger<Car> exchanger = new Exchanger<>();
+    boolean carOnParkingFirst;
 
     @Override
-    public boolean addPairOfCars(Car firstCar, Car secondCar, BlockingQueue<Car> parkingPlaces, int numberForExchange) {
+    public boolean addPairOfCars(Car firstCar, Car secondCar, BlockingQueue<Car> parkingPlaces) {
         try {
-           // parkingPlaces.offer(firstCar, SIZE_OF_PARKING_TIME, TimeUnit.SECONDS);
 
             System.out.println("-----------------------------------------");
             System.out.println("Car1 is trying to park: " + firstCar.toString());
             System.out.println("Car2 is trying to park: " + secondCar.toString());
             System.out.println("-----------------------------------------");
+
             if (parkingPlaces.offer(firstCar, SIZE_OF_PARKING_TIME, TimeUnit.SECONDS) == true){
                 carOnParkingFirst = true;
                 System.out.println("-----------------------------------------------------");
                 System.out.println(firstCar.toString() + "\n" + " was parked!!");
                 System.out.println("-----------------------------------------------------");
-                if (parkingPlaces.offer(secondCar, SIZE_OF_PARKING_TIME, TimeUnit.SECONDS) == true){
 
+                if (parkingPlaces.offer(secondCar, SIZE_OF_PARKING_TIME, TimeUnit.SECONDS) == true) {
                     System.out.println("-----------------------------------------------------");
                     System.out.println(secondCar.toString() + "\n" + " was parked!!");
                     System.out.println("-----------------------------------------------------");
 
-                } else if (parkingPlaces.offer(secondCar, SIZE_OF_PARKING_TIME, TimeUnit.SECONDS) == false){
-
+                } else if (parkingPlaces.offer(secondCar, SIZE_OF_PARKING_TIME, TimeUnit.SECONDS) == false) {
                     System.out.println("-----------------------------------------------------");
                     System.out.println(secondCar.toString() + "\n" + " couldn't park!!");
                     System.out.println("-----------------------------------------------------");
 
                 }
+
                 return carOnParkingFirst;
+
             } else if (parkingPlaces.offer(firstCar, SIZE_OF_PARKING_TIME, TimeUnit.SECONDS) == false){
                carOnParkingFirst = false;
                 System.out.println("-----------------------------------------------------");
@@ -73,14 +56,15 @@ public class ParkingRepositoryImpl implements ParkingRepository {
 
         } catch (InterruptedException exception) {
         exception.printStackTrace();
+
     }
 
         return carOnParkingFirst;
+
     }
 
     @Override
     public void deleteCar(BlockingQueue<Car> parkingPlaces) {
-
         try {
             System.out.println("--------------------------------------");
             System.out.println("Car was deleted" + parkingPlaces.take());
@@ -88,7 +72,9 @@ public class ParkingRepositoryImpl implements ParkingRepository {
 
         } catch (InterruptedException exception) {
             exception.printStackTrace();
+
         }
+
     }
 
 }
