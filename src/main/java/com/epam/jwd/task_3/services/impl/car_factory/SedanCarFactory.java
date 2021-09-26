@@ -12,8 +12,8 @@ public class SedanCarFactory implements CarFactory {
     private static final String SERIES_NAME = "EA";
 
     @Override
-    public Car getOpelCar() {
-        return new Car("Opel Insignia", new PersonalNumberGenerator().generateId(), SERIES_NAME);
+    public Car getMercedesCar() {
+        return new Car("Mercedes-Benz A-Class AMG", new PersonalNumberGenerator().generateId(), SERIES_NAME);
 
     }
 
@@ -24,6 +24,14 @@ public class SedanCarFactory implements CarFactory {
     }
 
     @Override
+    public Car getOpelCar() {
+        return new Car("Opel Insignia", new PersonalNumberGenerator().generateId(), SERIES_NAME);
+
+    }
+
+
+
+    @Override
     public Car getVolkswagenCar() {
        return new Car("Volkswagen Polo", new PersonalNumberGenerator().generateId(), SERIES_NAME);
 
@@ -32,12 +40,6 @@ public class SedanCarFactory implements CarFactory {
     @Override
     public Car getRenaultCar() {
        return new Car("Renault Logan", new PersonalNumberGenerator().generateId(), SERIES_NAME);
-
-    }
-
-    @Override
-    public Car getMercedesCar() {
-       return new Car("Mercedes-Benz A-Class AMG", new PersonalNumberGenerator().generateId(), SERIES_NAME);
 
     }
 
