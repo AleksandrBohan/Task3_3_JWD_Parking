@@ -18,11 +18,11 @@ public class ParkingView {
             "\n" + "5 - add 25 places" +
             "\n";
 
-    void getCountOfCars(){
+    public void getCountOfCars(){
         System.out.println(CAR_COUNT);
     }
 
-    void getCountOfParkingPlaces(){
+    public void getCountOfParkingPlaces(){
         System.out.println(PARKING_PLACES_COUNT);
     }
 }

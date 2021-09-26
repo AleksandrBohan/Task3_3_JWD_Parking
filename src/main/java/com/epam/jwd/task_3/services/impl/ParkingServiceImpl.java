@@ -1,6 +1,7 @@
 package com.epam.jwd.task_3.services.impl;
 
 
+import com.epam.jwd.task_3.controller.ParkingController;
 import com.epam.jwd.task_3.repository.impl.ParkingRepositoryImpl;
 import com.epam.jwd.task_3.repository.model.Car;
 import com.epam.jwd.task_3.services.api.CarFactory;
@@ -21,33 +22,44 @@ import java.util.concurrent.Exchanger;
 
 
 
-public class ParkingServiceImpl implements ParkingService, Runnable{
+public class ParkingServiceImpl implements ParkingService, Runnable {
 
     private int countOfCars;
-    private BlockingQueue<Car> parkingPlaces;
+    private int countOfParkingPlaces;
+    private static final int PRIORITY_FOR_PRODUCER_THREAD = 10;
+    private static final int PRIORITY_FOR_CONSUMER_THREAD = 5;
+   /* BlockingQueue<Car> parkingPlaces;
     CarFactory carFactory = new SedanCarFactory();
-    List<Car> cars = Collections.synchronizedList(new ArrayList<>());
+    List<Car> cars = Collections.synchronizedList(new ArrayList<>());*/
 
-    private Exchanger<Car> carExchanger = new Exchanger<>();
 
 
     @Override
     public void swapNearbyCars(Car car, Car otherCar) {
+        Exchanger<Car> carExchanger = new Exchanger<>();
 
         Thread producerThread = new Thread(new ProducerForExchange(carExchanger, car));
         Thread consumerThread = new Thread(new ConsumerForExchange(carExchanger, otherCar));
-        producerThread.setPriority(10);
-        consumerThread.setPriority(5);
+
+        producerThread.setPriority(PRIORITY_FOR_PRODUCER_THREAD);
+        consumerThread.setPriority(PRIORITY_FOR_CONSUMER_THREAD);
+
         producerThread.start();
         consumerThread.start();
     }
 
+    @Override
     public void fillParkingFromCarList() {
+
+
         boolean deleteStatement = true;
         int numberForExchange = 1;
-        parkingPlaces = new ArrayBlockingQueue<>(20, true);
+        CarFactory carFactory = new SedanCarFactory();
+        List<Car> cars = Collections.synchronizedList(new ArrayList<>());
+    //TODO delete it!!    Exchanger<Car> carExchanger = new Exchanger<>();
+        BlockingQueue<Car> parkingPlaces = new ArrayBlockingQueue<Car>(new ParkingController().setParkingPlacesNumber(), true);
 
-        int factoryCapacity = new CarServiceImpl().fillCarListForParking(carFactory, 5, cars).size();
+        int factoryCapacity = new CarServiceImpl().fillCarListForParking(carFactory, new ParkingController().setCarNumber(), cars).size();
         Car car = null;
         int countOfDelete = 0;
         for (int j = 0; j < factoryCapacity; j++) {
@@ -76,14 +88,6 @@ public class ParkingServiceImpl implements ParkingService, Runnable{
                         countOfDelete = 0;
 
 
-                        /*if (i % 6 == 0) {
-                           new ParkingRepositoryImpl().deleteCar(parkingPlaces);
-                           countOfDelete = 1;
-                           car = cars.get(j);
-
-                        }*/
-
-
                     }
                 }
             }
@@ -100,16 +104,18 @@ public class ParkingServiceImpl implements ParkingService, Runnable{
     }
 
 
-    public Exchanger<Car> getCarExchanger() {
-        return carExchanger;
+    public int getCountOfParkingPlaces() {
+        return countOfParkingPlaces;
     }
 
-    public void setCarExchanger(Exchanger<Car> carExchanger) {
-        this.carExchanger = carExchanger;
+    public void setCountOfParkingPlaces(int countOfParkingPlaces) {
+        this.countOfParkingPlaces = countOfParkingPlaces;
     }
 
     @Override
     public void run() {
         fillParkingFromCarList();
     }
+
+
 }

@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface ParkingService {
 
+
     void swapNearbyCars(Car car, Car otherCar);
     void fillParkingFromCarList();
 
