@@ -68,13 +68,18 @@ public class ParkingController {
 
     }
 
-   public int setParkingPlacesNumber(){
+    public int setParkingPlacesNumber(){
         ParkingView parkingView = new ParkingView();
         Scanner parkingScanner = new Scanner(System.in);
 
         parkingView.getCountOfParkingPlaces();
 
         String countOfParkingPlaces = parkingScanner.nextLine();
+
+        return getParkingPlacesNumberAfterInput(countOfParkingPlaces);
+    }
+
+   public int getParkingPlacesNumberAfterInput(String countOfParkingPlaces){
 
         int parkingPlacesNumber;
 
