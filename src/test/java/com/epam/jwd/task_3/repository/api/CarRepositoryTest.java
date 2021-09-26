@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CarRepositoryTest {
 
-    int carItemNumber = 0;
+    private int carItemNumber = 0;
 
     private static Car car;
 
