@@ -27,13 +27,11 @@ import java.util.concurrent.Exchanger;
 
 public class ParkingServiceImpl implements ParkingService, Runnable {
 
-    private boolean countOfDelete;
-
     private static final int PRIORITY_FOR_PRODUCER_THREAD = 10;
 
     private static final int PRIORITY_FOR_CONSUMER_THREAD = 5;
 
-    private static final int ELEMENT_REMOVAL_RATE = 4;
+    private static final int ELEMENT_REMOVAL_RATE = 3;
 
     private static final Logger logger = LogManager.getLogger(ParkingServiceImpl.class);
 
@@ -53,7 +51,6 @@ public class ParkingServiceImpl implements ParkingService, Runnable {
 
     @Override
     public void fillParkingFromCarList() {
-      //  boolean countOfDelete = false;
         boolean fairForBlockingQueue = true;
         CarFactory carFactory = new SedanCarFactory();
         Car car = null;
@@ -76,10 +73,12 @@ public class ParkingServiceImpl implements ParkingService, Runnable {
                     if ((parkingRepository.addPairOfCars(cars.get(i-1), cars.get(i),
                             parkingPlaces) == true)) {
 
-                        System.out.println(new ParkingRepositoryImpl().isExchangeChecking());
                         if (parkingRepository.isExchangeChecking() == true) {
                             System.out.println("I here!");
-                            swapNearbyCars(cars.get(i - 1), car);}
+                            swapNearbyCars(cars.get(i - 1), car);
+                            System.out.println("THIS IS WIN i-1: " + cars.get(i - 1).toString());
+                            System.out.println("THIS IS WIN CAR: " + car.toString());
+                        }
 
                             if (parkingRepository.isExchangeChecking() == false) {
                                 swapNearbyCars(cars.get(i - 1), cars.get(i));
@@ -91,11 +90,8 @@ public class ParkingServiceImpl implements ParkingService, Runnable {
 
                         }
 
-                        countOfDelete = false;
-
                         if (i % ELEMENT_REMOVAL_RATE == 0) {
                             new ParkingRepositoryImpl().deleteCar(parkingPlaces);
-                            countOfDelete = true;
 
                         }
 
@@ -103,9 +99,8 @@ public class ParkingServiceImpl implements ParkingService, Runnable {
 
                     }
 
-
-
                 }
+
             }
 
 
@@ -117,11 +112,4 @@ public class ParkingServiceImpl implements ParkingService, Runnable {
 
     }
 
-    public boolean isCountOfDelete() {
-        return countOfDelete;
-    }
-
-    public void setCountOfDelete(boolean countOfDelete) {
-        this.countOfDelete = countOfDelete;
-    }
 }
