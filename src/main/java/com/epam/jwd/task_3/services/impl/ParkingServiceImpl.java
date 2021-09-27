@@ -51,7 +51,8 @@ public class ParkingServiceImpl implements ParkingService, Runnable {
 
     @Override
     public void fillParkingFromCarList() {
-        int countOfDelete = 0;
+        boolean countOfDelete = false;
+        boolean fairForBlockingQueue = true;
         CarFactory carFactory = new SedanCarFactory();
         Car car = null;
         ParkingController parkingController = new ParkingController();
@@ -60,40 +61,41 @@ public class ParkingServiceImpl implements ParkingService, Runnable {
         try {
             factoryCapacity = new CarServiceImpl().fillCarListForParking(carFactory, parkingController.setCarNumber(), cars).size();
         } catch (Exception e) {
-           logger.error("IllegalStateException in fillParkingFromCarList!");
+            logger.error("IllegalStateException in fillParkingFromCarList!");
         }
         BlockingQueue<Car> parkingPlaces = new ArrayBlockingQueue<Car>(parkingController
-                .setParkingPlacesNumber(), true);
+                .setParkingPlacesNumber(), fairForBlockingQueue);
 
         for (int j = 0; j < factoryCapacity; j++) {
             for (int i = 0; i < factoryCapacity; i++) {
                 if ((!(cars.get(i).equals(cars.get(j))))) {
-                        if ((new ParkingRepositoryImpl().addPairOfCars(cars.get(i), cars.get(j),
-                                parkingPlaces) == true)) {
-                                if (countOfDelete == 1){
-                                    swapNearbyCars(cars.get(j), car);
+                    if ((new ParkingRepositoryImpl().addPairOfCars(cars.get(i), cars.get(j),
+                            parkingPlaces) == true)) {
+                        if (countOfDelete == true){
+                            swapNearbyCars(cars.get(j), car);
 
-                                } else if (countOfDelete == 0){
-                                    swapNearbyCars(cars.get(i), cars.get(j));
-
-                                }
-                            if (i % ELEMENT_REMOVAL_RATE == 0) {
-                                new ParkingRepositoryImpl().deleteCar(parkingPlaces);
-                                countOfDelete = 1;
-                                car = cars.get(i);
-
-                            }
-                        } else {
-                            System.out.println("Exchange isn't availiable!!");
+                        } else if (countOfDelete == false){
+                            swapNearbyCars(cars.get(i), cars.get(j));
 
                         }
 
-                        countOfDelete = 0;
+                        countOfDelete = false;
+
+                        if (i % ELEMENT_REMOVAL_RATE == 0) {
+                            new ParkingRepositoryImpl().deleteCar(parkingPlaces);
+                            countOfDelete = true;
+                            car = cars.get(i);
+
+                        }
+                    } else {
+                        System.out.println("Exchange isn't availiable!!");
 
                     }
+
                 }
             }
         }
+    }
 
     @Override
     public void run() {

@@ -16,13 +16,13 @@
             <Policies>
                 <TimeBasedTriggeringPolicy interval = "1" />
                 <SizeBasedTriggeringPolicy
-                        size="5 KB" />
+                        size="200 KB" />
             </Policies>
         </RollingFile>
     </Appenders>
 
     <Loggers>
-        <Root level="INFO">
+        <Root level="TRACE">
             <AppenderRef ref="STDOUT" />
             <AppenderRef ref="rollingFile" />
         </Root>
