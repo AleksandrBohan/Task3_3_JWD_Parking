@@ -99,6 +99,8 @@ public class ParkingServiceImpl implements ParkingService, Runnable {
 
                         }
 
+                        car = cars.get(i - 1);
+
                     } else {
                         logger.info("Exchange isn't availiable!!");
 
@@ -108,8 +110,6 @@ public class ParkingServiceImpl implements ParkingService, Runnable {
                         new ParkingRepositoryImpl().deleteCar(parkingPlaces);
 
                     }
-
-                    car = cars.get(i - 1);
 
                 }
 
