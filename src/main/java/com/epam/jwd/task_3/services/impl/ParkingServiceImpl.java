@@ -66,16 +66,21 @@ public class ParkingServiceImpl implements ParkingService, Runnable {
         BlockingQueue<Car> parkingPlaces = new ArrayBlockingQueue<Car>(parkingController
                 .setParkingPlacesNumber(), fairForBlockingQueue);
 
-        for (int j = 0; j < factoryCapacity; j++) {
-            for (int i = 0; i < factoryCapacity; i++) {
-                if ((!(cars.get(i).equals(cars.get(j))))) {
-                    if ((new ParkingRepositoryImpl().addPairOfCars(cars.get(i), cars.get(j),
+        for (int i = 0; i < factoryCapacity; i++) {
+            if (i != 0) {
+                System.out.println( "after for loop  " + countOfDelete);
+                if ((!(cars.get(i-1).equals(cars.get(i))))) {
+                    if ((new ParkingRepositoryImpl().addPairOfCars(cars.get(i-1), cars.get(i),
                             parkingPlaces) == true)) {
-                        if (countOfDelete == true){
-                            swapNearbyCars(cars.get(j), car);
+                        System.out.println("After Parking" + countOfDelete);
+                        if (countOfDelete == true) {
+                            swapNearbyCars(cars.get(i-1), car);
 
-                        } else if (countOfDelete == false){
-                            swapNearbyCars(cars.get(i), cars.get(j));
+                        } else if (countOfDelete == false) {
+                            swapNearbyCars(cars.get(i-1), cars.get(i));
+
+                        } else {
+                            System.out.println("Exchange isn't availiable!!");
 
                         }
 
@@ -84,16 +89,15 @@ public class ParkingServiceImpl implements ParkingService, Runnable {
                         if (i % ELEMENT_REMOVAL_RATE == 0) {
                             new ParkingRepositoryImpl().deleteCar(parkingPlaces);
                             countOfDelete = true;
-                            car = cars.get(i);
-
+                            car = cars.get(i-1);
+                            System.out.println(countOfDelete + "delete");
                         }
-                    } else {
-                        logger.info("Exchange isn't availiable!!");
+                        System.out.println(countOfDelete + "afterDelete");
 
                     }
-
                 }
             }
+
         }
     }
 
