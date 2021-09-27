@@ -27,6 +27,8 @@ import java.util.concurrent.Exchanger;
 
 public class ParkingServiceImpl implements ParkingService, Runnable {
 
+    private boolean countOfDelete;
+
     private static final int PRIORITY_FOR_PRODUCER_THREAD = 10;
 
     private static final int PRIORITY_FOR_CONSUMER_THREAD = 5;
@@ -51,11 +53,12 @@ public class ParkingServiceImpl implements ParkingService, Runnable {
 
     @Override
     public void fillParkingFromCarList() {
-        boolean countOfDelete = false;
+      //  boolean countOfDelete = false;
         boolean fairForBlockingQueue = true;
         CarFactory carFactory = new SedanCarFactory();
         Car car = null;
         ParkingController parkingController = new ParkingController();
+        ParkingRepositoryImpl parkingRepository = new ParkingRepositoryImpl();
         List<Car> cars = Collections.synchronizedList(new ArrayList<>());
         int factoryCapacity = 0;
         try {
@@ -67,19 +70,23 @@ public class ParkingServiceImpl implements ParkingService, Runnable {
                 .setParkingPlacesNumber(), fairForBlockingQueue);
 
         for (int i = 0; i < factoryCapacity; i++) {
+
             if (i != 0) {
-                System.out.println( "after for loop  " + countOfDelete);
                 if ((!(cars.get(i-1).equals(cars.get(i))))) {
-                    if ((new ParkingRepositoryImpl().addPairOfCars(cars.get(i-1), cars.get(i),
+                    if ((parkingRepository.addPairOfCars(cars.get(i-1), cars.get(i),
                             parkingPlaces) == true)) {
-                        System.out.println("After Parking" + countOfDelete);
-                        if (countOfDelete == true) {
-                            swapNearbyCars(cars.get(i-1), car);
 
-                        } else if (countOfDelete == false) {
-                            swapNearbyCars(cars.get(i-1), cars.get(i));
+                        System.out.println(new ParkingRepositoryImpl().isExchangeChecking());
+                        if (parkingRepository.isExchangeChecking() == true) {
+                            System.out.println("I here!");
+                            swapNearbyCars(cars.get(i - 1), car);}
 
-                        } else {
+                            if (parkingRepository.isExchangeChecking() == false) {
+                                swapNearbyCars(cars.get(i - 1), cars.get(i));
+
+                            }
+                        }
+                    } else {
                             System.out.println("Exchange isn't availiable!!");
 
                         }
@@ -89,17 +96,20 @@ public class ParkingServiceImpl implements ParkingService, Runnable {
                         if (i % ELEMENT_REMOVAL_RATE == 0) {
                             new ParkingRepositoryImpl().deleteCar(parkingPlaces);
                             countOfDelete = true;
-                            car = cars.get(i-1);
-                            System.out.println(countOfDelete + "delete");
+
                         }
-                        System.out.println(countOfDelete + "afterDelete");
+
+                             car = cars.get(i-1);
 
                     }
+
+
+
                 }
             }
 
-        }
-    }
+
+
 
     @Override
     public void run() {
@@ -107,4 +117,11 @@ public class ParkingServiceImpl implements ParkingService, Runnable {
 
     }
 
+    public boolean isCountOfDelete() {
+        return countOfDelete;
+    }
+
+    public void setCountOfDelete(boolean countOfDelete) {
+        this.countOfDelete = countOfDelete;
+    }
 }
