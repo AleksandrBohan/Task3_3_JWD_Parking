@@ -3,8 +3,6 @@ package com.epam.jwd.task_3.repository.api;
 import com.epam.jwd.task_3.repository.impl.CarRepositoryImpl;
 import com.epam.jwd.task_3.repository.model.Car;
 
-import com.epam.jwd.task_3.services.logic.PersonalNumberGenerator;
-import org.junit.Assert;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
