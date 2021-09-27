@@ -16,6 +16,8 @@ public class ParkingController {
 
     private static final Logger logger = LogManager.getLogger(ParkingController.class);
 
+    private static final int PARKING_SERVICE_IMPL_THREAD_PRIORITY_NUMBER = 1;
+
     public static void main(String[] args) {
 
         Thread thread = new Thread(new ParkingServiceImpl());
