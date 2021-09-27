@@ -1,6 +1,8 @@
 package com.epam.jwd.task_3.services.exchanger;
 
 import com.epam.jwd.task_3.repository.model.Car;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.concurrent.Exchanger;
 
@@ -13,6 +15,8 @@ public class ProducerForExchange implements Runnable {
 
     private Car car;
 
+    private static final Logger logger = LogManager.getLogger(ProducerForExchange.class);
+
     public ProducerForExchange(Exchanger<Car> exchanger, Car car){
        setExchanger(exchanger);
        setCar(car);
@@ -23,12 +27,12 @@ public class ProducerForExchange implements Runnable {
     public void run() {
         try {
             car = exchanger.exchange(car);
-            System.out.println("-------------------------------------------" + "\n");
-            System.out.println("Producer received car: " + car.toString());
-            System.out.println("\n" + "-------------------------------------------");
+            logger.debug("-------------------------------------------" + "\n" +
+                    "Producer received car: " + car.toString() +
+                    "\n" + "-------------------------------------------");
 
         } catch (InterruptedException exception) {
-            exception.printStackTrace();
+           logger.error("InterruptedException exception in ProducerForExchange thread " + exception);
 
         }
 
