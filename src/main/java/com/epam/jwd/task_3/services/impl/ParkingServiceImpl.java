@@ -103,9 +103,6 @@ public class ParkingServiceImpl implements ParkingService, Runnable {
 
             }
 
-
-
-
     @Override
     public void run() {
         fillParkingFromCarList();

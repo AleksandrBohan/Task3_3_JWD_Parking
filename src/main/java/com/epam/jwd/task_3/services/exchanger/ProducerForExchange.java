@@ -32,7 +32,7 @@ public class ProducerForExchange implements Runnable {
                     "\n" + "-------------------------------------------");
 
         } catch (InterruptedException exception) {
-           logger.error("InterruptedException exception in ProducerForExchange thread " + exception);
+           logger.error("InterruptedException exception in ProducerForExchange thread! " + exception);
 
         }
 
