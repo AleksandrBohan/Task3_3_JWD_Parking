@@ -60,8 +60,8 @@ public class ParkingServiceImpl implements ParkingService, Runnable {
         int factoryCapacity = 0;
         try {
             factoryCapacity = new CarServiceImpl().fillCarListForParking(carFactory, parkingController.setCarNumber(), cars).size();
-        } catch (Exception e) {
-            logger.error("IllegalStateException in fillParkingFromCarList!");
+        } catch (IllegalStateException exception) {
+            logger.error("IllegalStateException in fillParkingFromCarList!" + exception);
         }
         BlockingQueue<Car> parkingPlaces = new ArrayBlockingQueue<Car>(parkingController
                 .setParkingPlacesNumber(), fairForBlockingQueue);
@@ -88,7 +88,7 @@ public class ParkingServiceImpl implements ParkingService, Runnable {
 
                         }
                     } else {
-                        System.out.println("Exchange isn't availiable!!");
+                        logger.info("Exchange isn't availiable!!");
 
                     }
 

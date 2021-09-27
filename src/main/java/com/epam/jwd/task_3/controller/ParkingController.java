@@ -4,8 +4,7 @@ package com.epam.jwd.task_3.controller;
 import com.epam.jwd.task_3.services.impl.ParkingServiceImpl;
 
 import com.epam.jwd.task_3.view.ParkingView;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
 
 import java.util.Scanner;
 
