@@ -74,10 +74,8 @@ public class ParkingServiceImpl implements ParkingService, Runnable {
                             parkingPlaces) == true)) {
 
                         if (parkingRepository.isExchangeChecking() == true) {
-                            System.out.println("I here!");
                             swapNearbyCars(cars.get(i - 1), car);
-                            System.out.println("THIS IS WIN i-1: " + cars.get(i - 1).toString());
-                            System.out.println("THIS IS WIN CAR: " + car.toString());
+
                         }
 
                             if (parkingRepository.isExchangeChecking() == false) {
