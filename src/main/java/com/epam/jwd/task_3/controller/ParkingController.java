@@ -22,6 +22,10 @@ public class ParkingController {
         thread.start();
     }
 
+    public static int getParkingServiceImplThreadPriorityNumber() {
+        return PARKING_SERVICE_IMPL_THREAD_PRIORITY_NUMBER;
+    }
+
     public int setCarNumber(){
         ParkingView carsView = new ParkingView();
         Scanner carsScanner = new Scanner(System.in);

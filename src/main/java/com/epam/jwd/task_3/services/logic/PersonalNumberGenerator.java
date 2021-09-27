@@ -12,6 +12,22 @@ public class PersonalNumberGenerator {
 
     private Lock lock = new ReentrantLock();
 
+    public static Long getPersonalNumber() {
+        return personalNumber;
+    }
+
+    public static void setPersonalNumber(Long personalNumber) {
+        PersonalNumberGenerator.personalNumber = personalNumber;
+    }
+
+    public Lock getLock() {
+        return lock;
+    }
+
+    public void setLock(Lock lock) {
+        this.lock = lock;
+    }
+
     public Long generateId() {
         lock.lock();
         personalNumber++;

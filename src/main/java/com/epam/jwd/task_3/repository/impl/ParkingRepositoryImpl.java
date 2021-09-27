@@ -9,6 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 
+import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 
@@ -23,12 +24,21 @@ public class ParkingRepositoryImpl implements ParkingRepository {
 
     private static final Logger logger = LogManager.getLogger(ParkingRepositoryImpl.class);
 
+    public static int getSizeOfParkingTime() {
+        return SIZE_OF_PARKING_TIME;
+    }
+
+    public static Logger getLogger() {
+        return logger;
+    }
+
 
     @Override
     public boolean addPairOfCars(Car firstCar, Car secondCar, BlockingQueue<Car> parkingPlaces) {
         boolean carOnParkingFirst = false;
         Parking parking = new Parking(parkingPlaces);
         ParkingServiceImpl parkingService = new ParkingServiceImpl();
+
         try {
             logger.debug("-----------------------------------------" +
                     "\n" + "Car1 is trying to park: " + firstCar.toString());
@@ -65,7 +75,7 @@ public class ParkingRepositoryImpl implements ParkingRepository {
             }
 
         } catch (InterruptedException exception) {
-             logger.error("InterruptedException in addPairOfCars() method!");
+             logger.error("InterruptedException in addPairOfCars() method! " + exception);
 
     }
 
@@ -80,7 +90,7 @@ public class ParkingRepositoryImpl implements ParkingRepository {
             logger.debug("Car was deleted" + parking.getParkingPlaces().take());
 
         } catch (InterruptedException exception) {
-            logger.error("InterruptedException in deleteCar() method!");
+            logger.error("InterruptedException in deleteCar() method!" + exception);
 
         }
 
@@ -92,5 +102,25 @@ public class ParkingRepositoryImpl implements ParkingRepository {
 
     public void setExchangeChecking(boolean exchangeChecking) {
         this.exchangeChecking = exchangeChecking;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ParkingRepositoryImpl that = (ParkingRepositoryImpl) o;
+        return exchangeChecking == that.exchangeChecking;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(exchangeChecking);
+    }
+
+    @Override
+    public String toString() {
+        return "ParkingRepositoryImpl{" +
+                "exchangeChecking=" + exchangeChecking +
+                '}';
     }
 }

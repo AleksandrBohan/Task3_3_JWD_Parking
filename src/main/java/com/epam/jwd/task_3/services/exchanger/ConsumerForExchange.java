@@ -33,7 +33,7 @@ public class ConsumerForExchange implements Runnable {
                     "\n" + "-------------------------------------------");
 
         } catch (InterruptedException exception) {
-           logger.error("InterruptedException exception in ConsumerForExchange thread!" + exception);
+           logger.error("InterruptedException exception in ConsumerForExchange thread! " + exception);
 
         }
     }

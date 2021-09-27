@@ -35,6 +35,22 @@ public class ParkingServiceImpl implements ParkingService, Runnable {
 
     private static final Logger logger = LogManager.getLogger(ParkingServiceImpl.class);
 
+    public static int getPriorityForProducerThread() {
+        return PRIORITY_FOR_PRODUCER_THREAD;
+    }
+
+    public static int getPriorityForConsumerThread() {
+        return PRIORITY_FOR_CONSUMER_THREAD;
+    }
+
+    public static int getElementRemovalRate() {
+        return ELEMENT_REMOVAL_RATE;
+    }
+
+    public static Logger getLogger() {
+        return logger;
+    }
+
     @Override
     public void swapNearbyCars(Car car, Car otherCar) {
         Exchanger<Car> carExchanger = new Exchanger<>();
@@ -61,7 +77,7 @@ public class ParkingServiceImpl implements ParkingService, Runnable {
         try {
             factoryCapacity = new CarServiceImpl().fillCarListForParking(carFactory, parkingController.setCarNumber(), cars).size();
         } catch (IllegalStateException exception) {
-            logger.error("IllegalStateException in fillParkingFromCarList!" + exception);
+            logger.error("IllegalStateException in fillParkingFromCarList() method!" + exception);
         }
         BlockingQueue<Car> parkingPlaces = new ArrayBlockingQueue<Car>(parkingController
                 .setParkingPlacesNumber(), fairForBlockingQueue);
@@ -69,8 +85,8 @@ public class ParkingServiceImpl implements ParkingService, Runnable {
         for (int i = 0; i < factoryCapacity; i++) {
 
             if (i != 0) {
-                if ((!(cars.get(i-1).equals(cars.get(i))))) {
-                    if ((parkingRepository.addPairOfCars(cars.get(i-1), cars.get(i),
+                if ((!(cars.get(i - 1).equals(cars.get(i))))) {
+                    if ((parkingRepository.addPairOfCars(cars.get(i - 1), cars.get(i),
                             parkingPlaces) == true)) {
 
                         if (parkingRepository.isExchangeChecking() == true) {
@@ -78,28 +94,29 @@ public class ParkingServiceImpl implements ParkingService, Runnable {
 
                         }
 
-                            if (parkingRepository.isExchangeChecking() == false) {
-                                swapNearbyCars(cars.get(i - 1), cars.get(i));
+                        if (parkingRepository.isExchangeChecking() == false) {
+                            swapNearbyCars(cars.get(i - 1), cars.get(i));
 
-                            }
                         }
+
                     } else {
-                            System.out.println("Exchange isn't availiable!!");
-
-                        }
-
-                        if (i % ELEMENT_REMOVAL_RATE == 0) {
-                            new ParkingRepositoryImpl().deleteCar(parkingPlaces);
-
-                        }
-
-                             car = cars.get(i-1);
+                        logger.info("Exchange isn't availiable!!");
 
                     }
+
+                    if (i % ELEMENT_REMOVAL_RATE == 0) {
+                        new ParkingRepositoryImpl().deleteCar(parkingPlaces);
+
+                    }
+
+                    car = cars.get(i - 1);
 
                 }
 
             }
+
+        }
+    }
 
     @Override
     public void run() {
